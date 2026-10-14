@@ -81,13 +81,18 @@ footer a { color: var(--ink); }
     <p class="lede">Parvis Labs is a small studio building software with AI as a partner: private by default, careful with what matters, and made to last.</p>
   </div></div>
 
-  <section aria-labelledby="why"><div class="wrap grid">
-    <div><h2 id="why">Why we build</h2><p class="label">A note from the founder</p></div>
+  <section aria-labelledby="build"><div class="wrap grid">
+    <div><h2 id="build">How we build</h2><p class="label">Kaizen, with AI in the loop</p></div>
     <div class="letter">
-      <p>In the Gita, Krishna never fights. He drives Arjun's chariot, sees the whole field and offers counsel, and Arjun acts. That is how I build with AI. It is the clearest view of the field I have ever had. The choices, and the responsibility for them, stay with people.</p>
-      <p>Most software is built to hold your attention. I want to build the kind that gives it back: tools that do the routine work quietly, that you can trust because you can check them, and that keep what is yours on a machine you control.</p>
-      <p>Parvis is Latin for small. Everything here starts small on purpose, on one computer at home, for the people closest to me, and is only shared when it has earned it. What I hope we leave behind is not a big company but good tools and good habits, handed down.</p>
-      <p class="sig">Sachin</p>
+      <p>Kaizen is the practice of getting a little better every day, in small steps anyone can check. We apply it to how we work with AI. Every project runs as a loop: plan a small change, write the test that proves it, let an agent build it, review it with fresh eyes, and keep what we learned.</p>
+      <ol class="principles">
+        <li><span class="n">01</span><div><b>Small batches.</b><p>One change, one review, one merge. Small steps are easy to check and easy to undo.</p></div></li>
+        <li><span class="n">02</span><div><b>Prove it first.</b><p>A failing test comes before the fix, then we break the fix on purpose to make sure the test notices.</p></div></li>
+        <li><span class="n">03</span><div><b>A second set of eyes.</b><p>Work that touches money or security is checked by a different model, or a person, before it ships.</p></div></li>
+        <li><span class="n">04</span><div><b>Guardrails live in the system, not the prompt.</b><p>Limits are enforced by code and hooks an agent cannot edit. A person approves every change to them.</p></div></li>
+        <li><span class="n">05</span><div><b>Decisions are written down.</b><p>Every ruling is logged with its reason, so the next session, human or AI, starts where the last one stopped.</p></div></li>
+        <li><span class="n">06</span><div><b>Show, don't tell.</b><p>We judge work by what it does on screen and in the numbers, not by how it is described.</p></div></li>
+      </ol>
     </div>
   </div></section>
 
