@@ -80,11 +80,17 @@ Read-only checks from the first session. They change Phase 2.
 - **The repo is public.** Every committed file is readable, and Pages may also serve Markdown files as pages. Planning files pushed to `main` are published.
 - **A no-DNS route exists.** Building the Astro site with a GitHub Action and serving it from GitHub Pages keeps every DNS record as it is. Moving to Cloudflare Pages or Vercel needs a DNS change and the owner's yes.
 
+## Decisions (owner, Nov 12 2026)
+
+1. **Atlas:** show it as a general product, a three-dimensional analysis engine for hotel revenue management. Remove everything specific to the employer. The owner sees value beyond the day job and may one day pitch smaller hotels for in-house revenue management.
+2. **Blackfin:** show it all. Account numbers, keys and logins still never appear.
+3. **Name on the site:** "Parvis Labs", with "Founder Sachin Kumar".
+4. **DNS:** on a Cloudflare account the owner controls. Confirmed.
+5. **Planning files in a public repo:** fine.
+6. **Hosting:** move to Cloudflare Pages, for branch previews and to use more of Cloudflare. The DNS change still needs a yes on the exact records.
+
+These override the "Owner's call" and "Check first" rows in the lineup table above. `CLAUDE.md` holds the current table.
+
 ## Open decisions for the owner
 
-1. **Atlas:** list it, describe it generically, or leave it out until employer policy is checked? Recommendation: leave it out of v1.
-2. **Blackfin:** show it, and how much?
-3. **Name on the site:** full name, or Parvis Labs only?
-4. **Where DNS lives now.** Lookup done: Cloudflare. The owner only confirms.
-5. **New: planning files in a public repo.** Push this scaffold to `main` as is, keep it on a branch, or make the repo private first?
-6. **New: hosting route.** Stay on GitHub Pages (no DNS change) or move to Cloudflare Pages or Vercel (DNS change)?
+None from v0.1. The design interview (Phase 0) is next.

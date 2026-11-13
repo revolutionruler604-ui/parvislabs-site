@@ -28,18 +28,19 @@ What each project may show. When in doubt, leave it out and ask.
 | Rich Life Dashboard | Feature | Demo household only. Never real household figures |
 | Language Coach | Feature, once it runs | The owner's own recordings stay private |
 | Frame Board / Egloo | Yes | No home network, doorbell or account details |
-| Blackfin | Owner's call, not yet made | No account details, positions or performance unless the owner chooses to share |
+| Blackfin | Feature (decided Nov 12 2026) | Positions and performance may be shown. Never account numbers, keys or broker logins |
 | Chicken coop | Yes | The 3D model works well as a visual |
-| Atlas | Check first, not yet cleared | Tied to day-job work. Check employer policy before listing. At most a generic description. Never employer data, property names or rates |
+| Atlas | Yes, as a general product (decided Nov 12 2026) | Shown as a three-dimensional analysis engine for hotel revenue management, with smaller hotels as the future customer. Nothing specific to the owner's employer: no employer name, data, property names, rates, internal terms, or screens made from real work data |
 | This site | Yes | Its own build log |
 
-A project marked "not yet made" or "not yet cleared" stays off every page, draft and screenshot until the owner says yes.
+The name on the site is "Parvis Labs", with the line "Founder Sachin Kumar". That is the only personal name the site carries.
 
 ## DNS and domains
 
 - No DNS change without the owner's yes. That includes records, nameservers, the `CNAME` file, the Pages custom-domain setting and any move to another host.
 - The `richlife` subdomain serves a separate live site. It must keep working. Check it before and after any hosting change.
 - Read-only lookups (`dig`, `curl -I`) are fine at any time.
+- Hosting direction (decided Nov 12 2026): move to Cloudflare Pages, for a preview link on every branch. DNS is on a Cloudflare account the owner controls. The move itself still waits for a yes on the exact records to change.
 
 ## Privacy
 
