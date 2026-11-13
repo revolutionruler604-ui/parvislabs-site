@@ -28,9 +28,9 @@ What each project may show. When in doubt, leave it out and ask.
 | Rich Life Dashboard | Feature | Demo household only. Never real household figures |
 | Language Coach | Feature, once it runs | The owner's own recordings stay private |
 | Frame Board / Egloo | Yes | No home network, doorbell or account details |
-| Blackfin | Feature (decided Nov 12 2026) | Positions and performance may be shown. Never account numbers, keys or broker logins |
+| Blackfin | Feature (decided Nov 12 2026) | For now: the method and the architecture, plus a mention of the first two trades. No results chart or performance figures until the owner asks for them. Never account numbers, keys or broker logins |
 | Chicken coop | Yes | The 3D model works well as a visual |
-| Atlas | Yes, as a general product (decided Nov 12 2026) | Shown as a three-dimensional analysis engine for hotel revenue management, with smaller hotels as the future customer. Nothing specific to the owner's employer: no employer name, data, property names, rates, internal terms, or screens made from real work data |
+| Atlas | In the lab, a brief glimpse only (decided Nov 12 2026) | A short description of a three-dimensional analysis engine for hotel revenue management. The public version will rest on the owner's own knowledge and be independent of any employer data. No employer name, data, property names, rates, internal terms, or screens made from real work data |
 | This site | Yes | Its own build log |
 
 The name on the site is "Parvis Labs", with the line "Founder Sachin Kumar". That is the only personal name the site carries.
