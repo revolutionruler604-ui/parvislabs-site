@@ -10,8 +10,8 @@ The plan is in `docs/PLAN.md`. The master copy lives in Notion (Documents, "Parv
 - Every push to `main` publishes. Every file in the repo is readable by anyone, including this one.
 - Work on a branch. Merge to `main` only after the review and approval below.
 - Nothing goes in git that is not safe to publish: no real names, emails, account numbers, hostnames beyond the site's own domain, keys or tokens. Scan the diff before every commit.
-- GitHub Pages builds `main` from the repo root with its older builder, so every file on `main` gets an address under the apex domain. Until the apex moves to Cloudflare, only the live page's own files go on `main`. Check with `gh api repos/{owner}/{repo}/pages` before any push to `main`.
-- A pushed branch publishes its whole history. Lane history stays on the build machine; work reaches GitHub as one squashed commit, after scanning `git log -p` for anything the disclosure table forbids.
+- GitHub Pages builds `main` from the repo root with its legacy builder (`gh api repos/{owner}/{repo}/pages --jq .build_type` prints `legacy`), so every file on `main` gets an address under the apex domain. While that holds, the rework waits on branch `v2` and does not merge to `main`. It merges once the apex is served from Cloudflare.
+- A pushed branch publishes its whole history. The working branches stay on the build machine; work reaches GitHub as one squashed commit, after scanning `git log -p` for anything the disclosure table forbids.
 
 ## Review before publishing
 

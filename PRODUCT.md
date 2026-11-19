@@ -34,11 +34,11 @@ One founder with a day job, and a crew of AI agents that plan, build and review 
 ## Capabilities and Constraints
 
 - Static site built with Astro. Fonts and scripts are served from the site itself. No tracking across sites.
-- Hosting is moving to Cloudflare (Workers with static assets). A private preview comes first. No DNS change without the founder's yes.
-- Every published word gets a review by a model that did not write it before it reaches the live site. The founder approves a huge change: a ground-up rework, a new page or project, a change to what a project may show, or anything that touches DNS or hosting.
+- Hosting is moving to Cloudflare Pages. A private preview comes first. No DNS change without the founder's yes.
+- Before a published word reaches the live site, a model that did not write it reviews it. The founder approves a huge change: a ground-up rework, a new page or project, a change to what a project may show, or anything that touches DNS or hosting.
 - The chicken coop project is removed from the site (Nov 13 2026).
 - Rich Life: only the invented showcase household may appear. Never real household figures.
-- Blackfin: method, architecture and the investment thesis, plus counts of stocks read, orders refused and trades made, and one results figure: the account's percent change since it went live, shown live on the home page. Never a dollar amount, the account's value, the starting amount, tickers, share counts or account details.
+- Blackfin: the method and the idea behind it, plus counts of stocks read, orders refused and trades made, and one results figure: the account's percent change since it went live, shown live on the home page. Never a dollar amount, the account's value, the starting amount, tickers, share counts or account details.
 - Frame Board: a real board rendered from randomized, invented household data. No home network, doorbell or account details.
 - Atlas: a short description, plus one small demo on an invented hotel, captioned as made up. No employer name, data, property names, rates or any money figure, or internal terms.
 - No named competitor on the page. Say what most money apps do and show what Rich Life does instead.
@@ -59,7 +59,7 @@ One founder with a day job, and a crew of AI agents that plan, build and review 
 - Blackfin: its written proposal, the guard that checks every order, its journal design and its schedule. Its thesis is small-company drift after earnings, long only.
 - Frame Board: the real board renderer, run on invented data.
 - The method: a log of changes with builder, reviewer, fix rounds, serious findings and founder minutes. Figures on the site are computed from the rows and carry their date.
-- Absent, and not to be invented: customers, testimonials, press, any trading result beyond the one percent figure, revenue, user counts.
+- Absent, and not to be invented: customers, testimonials, press, any trading result beyond the trade counts and the single percent-change figure, revenue, user counts.
 
 ## Product Principles
 
