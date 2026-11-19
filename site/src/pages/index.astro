@@ -1,0 +1,326 @@
+---
+import { Image } from 'astro:assets';
+import HomeLayout from '../layouts/HomeLayout.astro';
+import blackfin from '../data/blackfin.json';
+import record from '../data/record.json';
+import flowImg from '../assets/img/flow.jpg';
+import drillImg from '../assets/img/drill.jpg';
+import boardImg from '../assets/img/board.jpg';
+import boardAfterImg from '../assets/img/board-after.jpg';
+import phoneImg from '../assets/img/phone.jpg';
+import phoneAfterImg from '../assets/img/phone-after.jpg';
+import '../styles/home.css';
+
+// The Blackfin sentence comes from the data file, so it cannot drift from it.
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const dateOf = (iso: string) => {
+  const [year, month, day] = iso.split('-').map(Number);
+  return { year, month: months[month - 1], day };
+};
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+const since = dateOf(blackfin.liveSince);
+const asOf = dateOf(blackfin.asOf);
+const sinceLine = `Since ${since.month} ${since.day} it has looked at ${plural(blackfin.companiesRead, 'stock', 'stocks')}, refused ${plural(blackfin.entriesRefused, 'order', 'orders')} and made ${plural(blackfin.tradesOpened, 'trade', 'trades')}.`;
+const asOfLine = `As of ${asOf.month} ${asOf.day}, ${asOf.year}.`;
+// The account's one figure (CLAUDE.md, the disclosure table). The page prints the last snapshot;
+// home.js swaps in the live reading from /api/blackfin-live once a minute when there is one.
+const pct = Number(blackfin.changePct);
+const pctText = `${pct > 0 ? '+' : pct < 0 ? '\u2212' : ''}${Math.abs(pct).toFixed(2)}%`;
+const tickSay = `Change in the account since ${since.month} ${since.day}.`;
+
+// The record sentences come from the route log snapshot (scripts/record-snapshot.py).
+// It counts only merged changes that an agent other than the builder reviewed.
+const recFrom = dateOf(record.from);
+const recTo = dateOf(record.asOf);
+const found = record.foundAt.length;
+const mergedLine = `${record.reviewed} changes went through that review and merged between ${recFrom.month} ${recFrom.day} and ${recTo.month} ${recTo.day}, ${recTo.year}.`;
+const foundLine = found === 0 ? 'None of them has turned out to have a bug.' : found === 1 ? 'One of them later turned out to have a bug.' : `${found} of them later turned out to have a bug.`;
+const founderLine = `${record.tookFounderTime} of the ${record.reviewed} took some of the founder's time. The other ${record.reviewed - record.tookFounderTime} took none.`;
+// The dot field picks the width, 12 to 16 across, that leaves the fullest last row.
+const dotCols = [12, 13, 14, 15, 16].map((c) => ({ c, fill: ((record.reviewed % c) || c) / c })).sort((a, b) => b.fill - a.fill || b.c - a.c)[0].c;
+const dotsNote = found === 0 ? 'Each dot is a change.' : found === 1 ? 'Each dot is a change. The hollow one had the bug.' : 'Each dot is a change. The hollow ones had the bugs.';
+---
+
+<HomeLayout
+  title="Parvis Labs"
+  description="Parvis Labs makes software with a crew of AI agents that plan, build and check each other's work."
+>
+<main id="page">
+
+<section class="hero">
+  <header class="top"><a class="mark" href="/">Parvis Labs</a><a class="write" href="#write">Write to us</a></header>
+
+  <svg class="rig" id="wide" viewBox="0 0 1440 900" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+    <path class="lift" id="w-lift" d="M1120 520 C1215 400 1010 255 770 258"/>
+    <path class="twig" id="w-founder" d="M1040 665 C1120 690 1230 672 1292 716 C1236 790 960 752 762 790"/>
+    <path class="twig" d="M1180 170 C1215 150 1236 128 1262 122"/>
+    <path class="twig" d="M700 330 C668 322 650 302 636 282"/>
+    <path class="track" id="w-main" d="M1150 -900 L1150 -20 C1150 60 1212 110 1180 170 C1150 232 900 216 760 262 C664 294 640 362 720 396 C860 456 1040 440 1120 520 C1170 572 1130 640 1040 665 C900 705 800 720 760 790 C740 832 750 880 750 940 L750 1900"/>
+    <circle class="joint" data-j="plan" cx="1180" cy="170" r="8"/>
+    <circle class="joint" data-j="build" cx="760" cy="262" r="8"/>
+    <circle class="joint" data-j="review" cx="1120" cy="520" r="8"/>
+    <circle class="joint" data-j="record" cx="760" cy="790" r="8"/>
+    <ellipse class="stone" cx="1292" cy="730" rx="26" ry="9"/>
+    <text class="lbl" x="1206" y="182">Plan</text>
+    <text class="lbl" x="742" y="238" text-anchor="end">Build</text>
+    <text class="lbl" x="1146" y="528">Review</text>
+    <text class="lbl" x="1268" y="768">The founder</text>
+    <text class="lbl" x="738" y="806" text-anchor="end">Record</text>
+    <g id="w-balls"></g>
+  </svg>
+
+  <svg class="rig" id="tall" viewBox="0 0 390 844" preserveAspectRatio="xMaxYMid meet" aria-hidden="true" hidden>
+    <path class="lift" id="t-lift" d="M318 430 C380 350 372 250 300 214"/>
+    <path class="twig" id="t-founder" d="M300 560 C340 575 372 590 372 620 C372 650 310 680 296 716"/>
+    <path class="track" id="t-main" d="M382 -900 L382 40 C382 80 345 80 338 112 C322 150 300 170 300 214 C300 262 244 300 268 344 C286 380 330 392 318 430 C306 470 262 500 300 560 C292 610 278 660 296 716 C310 760 368 800 368 880 L368 1900"/>
+    <circle class="joint" data-j="plan" cx="338" cy="112" r="7"/>
+    <circle class="joint" data-j="build" cx="300" cy="214" r="7"/>
+    <circle class="joint" data-j="review" cx="318" cy="430" r="7"/>
+    <circle class="joint" data-j="record" cx="296" cy="716" r="7"/>
+    <ellipse class="stone" cx="372" cy="630" rx="16" ry="6"/>
+    <text class="lbl" x="322" y="117" text-anchor="end">Plan</text>
+    <text class="lbl" x="284" y="219" text-anchor="end">Build</text>
+    <text class="lbl" x="300" y="435" text-anchor="end">Review</text>
+    <text class="lbl" x="352" y="626" text-anchor="end"><tspan>The </tspan><tspan x="352" dy="1.15em">founder</tspan></text>
+    <text class="lbl" x="280" y="721" text-anchor="end">Record</text>
+    <g id="t-balls"></g>
+  </svg>
+
+  <div class="copy">
+    <h1>One person.<br>A crew of agents.</h1>
+    <p class="lede">Parvis Labs makes software with AI agents that plan, build and check each other's work. Drop a change in and watch who touches it.</p>
+    <div class="play">
+      <button class="drop" id="drop" type="button" aria-label="Drop a change"></button>
+      <span class="play-text"><b>Drop a change</b><span class="say" id="say" aria-live="polite">Go on. It is what the button is for.</span></span>
+    </div>
+    <p class="tally" id="tally" data-total={record.reviewed} data-founder={record.tookFounderTime} hidden><b id="n-done">0</b> recorded. The founder was asked <b id="n-founder">0</b> <span id="n-times">times</span>.</p>
+  </div>
+</section>
+
+<svg id="thread" aria-hidden="true"><path class="track" id="thread-path"/><g id="thread-twigs"></g><g id="thread-joints"></g><g id="thread-balls"></g></svg>
+
+<section class="room" id="record">
+  <div class="wrap pair">
+    <i class="knot" style="--x:46%;--y:2%"></i>
+    <i class="knot" style="--x:45%;--y:96%"></i>
+    <div class="words">
+      <h2>The agent that builds a change never reviews it.</h2>
+      <p>The reviewer is a different agent. It tries to break the change, and it is not polite about it.</p>
+      <p>{mergedLine} {foundLine}</p>
+      <p>{founderLine}</p>
+      <p><a class="go" href="/method">How the crew works</a></p>
+    </div>
+    <figure class="field thing" aria-hidden="true">
+      <div class="dots" style={`--cols:${dotCols}`}>{Array.from({ length: record.reviewed }, (_, i) => <i class={record.foundAt.includes(i) ? 'found' : undefined} />)}</div>
+      <figcaption class="note">{dotsNote}</figcaption>
+    </figure>
+  </div>
+  <div class="wrap pair depart">
+    <div class="words">
+      <h2 class="motto" lang="la">Sic parvis magna.</h2>
+      <p class="lede">Great things from small beginnings. The founder is the captain. The agents crew the ship.</p>
+    </div>
+    <div class="thing">
+      <i class="knot turn"></i>
+      <div class="ship" id="bowl">
+        <i class="knot mast"></i>
+        <i class="knot"></i>
+        <svg viewBox="0 0 260 112" aria-hidden="true">
+          <path class="sail" d="M138 -262 C196 -226 232 -150 236 -62 L138 -62 Z"/>
+          <path class="sail" d="M122 -214 C92 -180 72 -124 68 -62 L122 -62 Z"/>
+          <path class="pole" d="M130 -50 L130 30"/>
+          <path class="stone" d="M4 20 C52 34 204 36 258 12 C250 60 230 90 198 102 L64 102 C34 92 10 60 4 20 Z"/>
+        </svg>
+      </div>
+      <p class="bowl-say" id="bowl-say" aria-live="polite">Nothing aboard yet. The button is at the top.</p>
+    </div>
+  </div>
+</section>
+
+<section class="room port" id="rich-life">
+  <div class="leg">
+    <div class="sea">
+      <div class="arrive">
+        <h2>Rich Life</h2>
+        <p class="lede">A money app for two people who share a plan and keep a few secrets.</p>
+      </div>
+      <canvas class="globe" data-kind="sail" data-from="0" data-to="1" data-labels="0,1" role="img" aria-label="The globe. The ship leaves Plymouth and sails south to Cape Verde, the first port: Rich Life."></canvas>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="pair flip">
+      <div class="words">
+        <p>Most money apps hand a couple one login and one pile of transactions. Rich Life gives each person their own view and the household a third.</p>
+        <p>Each of you gets guilt-free money, yours to spend without a conversation. What you buy with it reaches your partner as a category, a total and a count. The purchases themselves never reach your partner's screen, unless you choose to share a category.</p>
+        <p>Shared costs split by income, down the middle, or your own way, with what each of you actually paid next to your fair share.</p>
+        <p><a class="go" href="/work/rich-life/">More about Rich Life</a></p>
+      </div>
+      <div class="thing">
+        <div class="seg" role="group" aria-label="Look as">
+          <button type="button" data-eyes="a" aria-pressed="true">Look as Person A</button>
+          <button type="button" data-eyes="b" aria-pressed="false">Look as Person B</button>
+        </div>
+        <div class="eyes" id="eyes-a">
+          <ul class="rows">
+            <li><span class="d">Oct 30</span><span>Osteria Nonna<small>Restaurants &amp; bars</small></span><span>$212.34</span></li>
+            <li><span class="d">Oct 2</span><span>Corner Coffee<small>Restaurants &amp; bars</small></span><span>$38.48</span></li>
+            <li><span class="d"></span><span>6 more</span><span>$301.81</span></li>
+          </ul>
+          <p class="after">Person A had a very good dinner, and sees all of it.</p>
+        </div>
+        <div class="eyes" id="eyes-b" hidden>
+          <ul class="rows">
+            <li class="sum"><i>Person A's guilt-free, Restaurants &amp; bars: $553, 8 purchases</i></li>
+          </ul>
+          <p class="after">Person B gets this one line. Not where. Not when. Not the dessert.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="head">
+        <p class="lede">Every dollar, counted once. Then you open it up.</p>
+        <div class="seg" role="group" aria-label="Chart">
+          <button type="button" data-flow="all" aria-pressed="true">All money</button>
+          <button type="button" data-flow="drill" aria-pressed="false">Open Guilt-Free</button>
+        </div>
+      </div>
+      <div class="pan" tabindex="0" role="group" aria-label="Money flow chart">
+        <div class="swap">
+          <Image quality={95} class="shot" id="flow-all" src={flowImg} width={1900} height={1004} loading="eager" alt="Rich Life's flow chart for October. Paychecks of $11,100, rental income of $2,350 and two small amounts join as $13,518 of money in, then split into fixed costs of $7,643, guilt-free spending of $1,704, investments of $500 and $3,671 left over." />
+          <Image quality={95} class="shot off" id="flow-drill" src={drillImg} width={1900} height={1004} alt="The same chart opened at Guilt-Free: $1,704, split into restaurants and bars at $707, shopping at $660 and four smaller amounts." loading="lazy" />
+        </div>
+      </div>
+      <p class="note" style="margin-top:1rem">The app, running on a household that does not exist. Transfers between your own accounts and card payments are left out, so nothing counts twice.</p>
+    </div>
+  </div>
+</section>
+
+<section class="room port" id="blackfin">
+  <div class="leg">
+    <div class="sea">
+      <div class="arrive">
+        <h2>Blackfin</h2>
+        <p class="lede">A trading bot that mostly says no.</p>
+      </div>
+      <canvas class="globe" data-kind="sail" data-from="1" data-to="2" data-labels="1,2" role="img" aria-label="The globe. The ship crosses the Atlantic from Cape Verde to the Río de la Plata, the second port: Blackfin."></canvas>
+    </div>
+  </div>
+  <div class="wrap pair">
+    <div class="words">
+      <p class="since" id="since">{sinceLine}</p>
+      <p class="note">{asOfLine}</p>
+      <div class="tick" id="tick">
+        <p class="tick-pct" id="tick-pct">{pctText}</p>
+        <p class="tick-say"><span class="tick-dot" aria-hidden="true"></span><span>{tickSay} <span id="tick-when"></span></span></p>
+      </div>
+      <h3>The idea</h3>
+      <p>When a small company beats its earnings forecast, the stock tends to keep climbing for days. People have written about this since the 1960s. It lasts in small companies because a big fund cannot buy enough of one to matter. A small account can. That is why Blackfin looks there.</p>
+      <h3>Why this idea, for this bot</h3>
+      <p>Blackfin is slow on purpose. It wakes twice each trading day, at 10:32 a.m. and 3:45 p.m. New York time, and takes a few seconds to place an order. It would lose every race. So it plays a game that lasts ten trading days, where a few seconds cost nothing.</p>
+      <h3>When we would turn it off</h3>
+      <p>Before the first trade we wrote down the results that would shut it down, measured after 15 closed trades and again after 40.</p>
+      <p><a class="go" href="/work/blackfin/">More about Blackfin</a></p>
+    </div>
+    <div class="thing">
+      <p class="lede">Try to make it buy.</p>
+      <ol class="gates" id="gates">
+        <li class="plain">A small company beats its earnings forecast</li>
+        <li><button class="switch" type="button" aria-pressed="true" data-no="The stock did not open at least 5% higher. No jump, no trade."><i></i>It opened at least 5% higher</button></li>
+        <li><button class="switch" type="button" aria-pressed="false" data-no="By 10:30 the price was back below the open. Many end right here."><i></i>At 10:30 it is still above its opening price</button></li>
+        <li><button class="switch" type="button" aria-pressed="true" data-no="Not enough people are trading it today. A quiet jump is not a jump."><i></i>It is trading at 1.5 times its usual volume</button></li>
+        <li><button class="switch" type="button" aria-pressed="true" data-no="Two positions are already open. Blackfin holds two at most."><i></i>Fewer than two positions are open</button></li>
+        <li><button class="switch" type="button" aria-pressed="true" data-no="The order broke one of the four limits. The bot cannot change them."><i></i>The order fits inside all four risk limits</button></li>
+        <li class="plain last">The broker</li>
+        <i class="ball-h" id="gate-ball"></i>
+      </ol>
+      <div class="send">
+        <button class="drop small" id="send" type="button" aria-label="Send an order"></button>
+        <b>Send an order</b>
+      </div>
+      <p class="verdict" id="verdict" aria-live="polite">One switch is off. That is the usual state of things.</p>
+      <h3>Who does what</h3>
+      <p>The model reads words. The code does arithmetic. An AI model reads the earnings news and never touches the math. Plain code sizes the order and checks four risk limits the bot cannot edit.</p>
+    </div>
+  </div>
+</section>
+
+<section class="room port" id="frame-board">
+  <div class="leg">
+    <div class="sea">
+      <div class="arrive">
+        <h2>Frame Board</h2>
+        <p class="lede">The kitchen TV becomes a paper notice board. The phone is the remote.</p>
+      </div>
+      <canvas class="globe" data-kind="sail" data-from="2" data-to="3" data-labels="2,3" role="img" aria-label="The globe. The ship sails down the coast of Patagonia to Puerto San Julián, the third port: Frame Board."></canvas>
+    </div>
+  </div>
+  <div class="wrap">
+    <div>
+      <p>Today, the week, dinner, chores, notes and how many eggs the hens laid, on the screen everyone already walks past. The rest of the day the TV goes back to showing art.</p>
+      <p><a class="go" href="/work/frame-board/">More about Frame Board</a></p>
+    </div>
+    <div class="stage">
+      <div class="tv swap">
+        <Image quality={90} id="board-0" src={boardImg} width={1920} height={1080} alt="The Frame Board on a kitchen TV: Friday's schedule, the weekend, a to-do list, this week's dinners, a note about a dog and a sock, the egg count and the chores." loading="lazy" />
+        <Image quality={90} class="off" id="board-1" src={boardAfterImg} width={1920} height={1080} alt="The same board a minute later, with one more egg counted and one more chore ticked." loading="lazy" />
+      </div>
+      <button class="phone swap" id="phone" type="button" aria-label="Tap the phone to log an egg and tick a chore. Tap again to undo.">
+        <Image id="phone-0" src={phoneImg} width={508} height={1100} alt="" loading="lazy" />
+        <Image class="off" id="phone-1" src={phoneAfterImg} width={508} height={1100} alt="" loading="lazy" />
+      </button>
+    </div>
+    <div class="stage-say">
+      <p class="verdict" id="board-say" aria-live="polite">Tap the phone.</p>
+      <p class="note">A made-up family on the real board. Biscuit the dog is also made up, which is a shame.</p>
+    </div>
+  </div>
+</section>
+
+<section class="room port" id="next">
+  <div class="leg">
+    <div class="sea">
+      <div class="arrive">
+        <h2>Not built yet</h2>
+        <p>Filled ports run today. Hollow ones are plans. We fill them in when they work, and not before.</p>
+      </div>
+      <canvas class="globe" data-kind="look" data-from="3" data-to="6" data-labels="3,4,5,6,7,8" role="img" aria-label="The globe. Five hollow ports wait ahead on the dotted route, from the Strait of Magellan up the Pacific coast to California."></canvas>
+    </div>
+  </div>
+  <div class="wrap">
+    <ul class="plans">
+      <li><b><a href="/work/language-coach/">Language Coach</a></b><span>A tutor you talk to for fifteen minutes a day. Its first real conversation ran on November 12, 2026. One student so far.</span></li>
+      <li><b><a href="/work/atlas/">Atlas</a></b><span>A three-dimensional analysis engine for hotel revenue management.</span></li>
+      <li><b>Rich Life for everyone</b><span>A version any household can sign up for.</span></li>
+      <li><b>Frame Board as a home operating system</b><span>The board is one screen. The plan is the whole house.</span></li>
+      <li><b>Three more Blackfin strategies</b><span>Same limits, new ideas. Each one starts on paper.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="room end" id="write">
+  <div class="wrap">
+    <h2>Say hello.</h2>
+    <div class="home">
+      <div>
+        <p class="lede">One address. A person reads it. The agents are not allowed.</p>
+        <p><a class="btn" id="mail" href="#write" data-u="hello" data-d="parvislabs.com">Write to us <svg viewBox="0 0 26 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 5h24M21 1l4 4-4 4"/></svg></a></p>
+        <p class="round">Three ports made. That is <span id="round">20</span>% of the way round. The rest is not written yet.</p>
+      </div>
+      <canvas class="globe" data-kind="pass" data-from="8" data-to="13" data-labels="9,10,11,12,13" role="img" aria-label="The globe. The dotted route runs on across the Pacific, past Ternate, round the Cape of Good Hope and home to Plymouth."></canvas>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <span>Parvis Labs. Founder Sachin Kumar.</span>
+  <nav><a href="/method/">How the crew works</a><a href="/principles/">Principles</a><a href="/about/">About</a></nav>
+</footer>
+<script is:inline src="/voyage/geo.js"></script>
+<script is:inline src="/voyage/land.js"></script>
+<script>
+  import '../scripts/home.js';
+</script>
+
+</HomeLayout>

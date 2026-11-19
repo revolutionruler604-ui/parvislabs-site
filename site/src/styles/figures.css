@@ -1,0 +1,174 @@
+/* Grid and pictures for the inner pages. Colours come from the tokens in global.css. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+}
+.grid > * {
+  min-width: 0;
+}
+
+/* Product pictures: no frame, only the soft lift the home page gives its screens */
+.plate {
+  background: none;
+  padding: 0;
+}
+.plate img {
+  width: 100%;
+  height: auto;
+}
+.mat {
+  background: none;
+  padding: 0;
+}
+.crop,
+.ph {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #1c1814;
+}
+.crop {
+  aspect-ratio: var(--ar);
+}
+.crop img {
+  position: absolute;
+  max-width: none;
+  width: var(--w);
+  left: var(--l);
+  top: var(--tp);
+  height: auto;
+}
+.c-home {
+  --ar: 1.843;
+  --w: 212.77%;
+  --l: -38.3%;
+  --tp: -25.49%;
+}
+.c-plan {
+  --ar: 1.821;
+  --w: 126.58%;
+  --l: -24.05%;
+  --tp: -20%;
+}
+.ph {
+  aspect-ratio: 4/5;
+}
+.ph img {
+  width: 100%;
+  height: auto;
+}
+.cap {
+  margin-top: 14px;
+}
+.hero-fig .hero-shot {
+  display: block;
+}
+
+/* The Blackfin figure: text on the plaster, the line and its joints */
+.bf-fig {
+  margin: 0;
+}
+.fig-m,
+.fig-t {
+  display: none;
+}
+.bf-fig .bf-note {
+  margin-top: 32px;
+  font-size: var(--body);
+  color: var(--ink);
+}
+.f-line {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.f-guard-line {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+.f-joint {
+  fill: var(--bg);
+  stroke: var(--line);
+  stroke-width: 3;
+}
+.f-stone {
+  fill: var(--line);
+}
+.f-fig-ink {
+  fill: var(--ink);
+}
+.f-title {
+  font-weight: 500;
+}
+.f-guard-title {
+  font-family: var(--serif);
+  font-weight: 700;
+}
+.f-guard-ink {
+  font-weight: 500;
+}
+.f-ink {
+  fill: var(--ink);
+}
+
+/* Frame Board: a house drawn in the one line */
+.fb-pic svg {
+  width: 100%;
+  height: auto;
+}
+.fb-line {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fb-screen {
+  fill: var(--line);
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .fig-d,
+  .fig-m {
+    display: none;
+  }
+  .fig-t {
+    display: block;
+  }
+}
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .grid > * {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+  .fig-t {
+    display: none;
+  }
+  .fig-m {
+    display: block;
+  }
+  .hero-fig .hero-shot {
+    width: min(76%, 300px);
+    aspect-ratio: auto;
+    overflow: visible;
+    background: none;
+    box-shadow: none;
+  }
+  .hero-fig .hero-shot img {
+    position: static;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    }
+}

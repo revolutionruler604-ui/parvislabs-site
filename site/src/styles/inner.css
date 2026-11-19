@@ -1,0 +1,597 @@
+/* The inner pages: project pages, Method, Principles, About.
+   The same world as the home page: plaster ground, ink, one line, no boxes.
+   Colours come from the tokens in global.css; the grid and pictures from figures.css. */
+.inner {
+  --sec-in: clamp(88px, 10vw, 150px);
+  --t: 4px;
+}
+.inner > * + * {
+  margin-top: var(--sec-in);
+}
+.inner > .pg-head {
+  margin-top: clamp(32px, 6vw, 88px);
+}
+
+/* Opening: the title at display size, the lede under it */
+.pg-head {
+  align-items: start;
+  row-gap: clamp(24px, 3vw, 40px);
+}
+.pg-head > h1 {
+  grid-column: 1/13;
+  grid-row: 1;
+  max-width: none;
+}
+.lede,
+.h-plain .lead {
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  line-height: 1.32;
+  max-width: 22em;
+  text-wrap: balance;
+}
+.lede .seed,
+.lede .lead {
+  display: block;
+}
+.hd-text {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+.hd-text .project-status {
+  color: var(--muted);
+}
+.hd-text ul {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.pg-head .link {
+  display: inline-block;
+}
+.h-fig .hd-text {
+  grid-column: 1/6;
+  grid-row: 2;
+}
+.h-fig .hero-fig,
+.h-fig .fb-pic {
+  grid-column: 6/13;
+  grid-row: 2;
+}
+.h-solo .hd-text {
+  grid-column: 1/8;
+  grid-row: 2;
+}
+.lab-mark {
+  grid-column: 8/13;
+  grid-row: 2;
+  justify-self: end;
+  width: 100%;
+  max-width: 220px;
+}
+.lab-mark svg {
+  width: 100%;
+  height: auto;
+}
+.lab-mark .f-ink {
+  fill: var(--ink);
+}
+.h-plain .lead {
+  grid-column: 1/8;
+  grid-row: 2;
+}
+.h-plain .lead p + p {
+  margin-top: 0.6em;
+}
+
+/* Sections: a label column and a text column */
+.sec {
+  row-gap: 28px;
+  align-items: start;
+}
+.sec-label {
+  grid-column: 1/5;
+  align-self: start;
+}
+.sec-body {
+  grid-column: 5/11;
+}
+.sec-body > * + * {
+  margin-top: 18px;
+}
+.sec-body ul,
+.sec-body ol {
+  padding-left: 1.2em;
+}
+.sec-body li {
+  max-width: 34em;
+}
+.sec-body li + li {
+  margin-top: 12px;
+}
+.sec-body b,
+.sec-body strong {
+  font-weight: 500;
+}
+.sec-body a {
+  color: var(--accent);
+}
+.sec-figs {
+  grid-column: 5/13;
+  margin-top: 12px;
+  display: grid;
+  gap: var(--gap);
+}
+.sec-figs.wide {
+  grid-column: 1/13;
+}
+.sec-figs .cap {
+  margin-top: 14px;
+}
+
+/* The problem and the opening paragraph: set as a lead */
+.sec-problem .sec-body,
+.sec-intro .sec-body {
+  grid-column: 5/12;
+  font-size: 1.4rem;
+  line-height: 1.45;
+}
+.sec-problem .sec-body p,
+.sec-intro .sec-body p {
+  max-width: 30em;
+}
+/* What we learned: set larger, in the display face */
+.sec-learned .sec-body {
+  grid-column: 5/13;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.28;
+}
+.sec-learned .sec-body li,
+.sec-learned .sec-body p {
+  max-width: 28em;
+}
+.sec-learned .sec-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+.sec-learned .sec-body li + li {
+  margin-top: 1.1em;
+}
+
+/* Rich Life pictures */
+.rl-phones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  align-items: start;
+}
+.rl-phones .ph {
+  aspect-ratio: auto;
+}
+
+/* Method: the path as six steps */
+.path {
+  grid-column: 1/13;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 64px) clamp(32px, 4vw, 56px);
+  counter-reset: step;
+  margin-top: 12px;
+}
+.path li {
+  counter-increment: step;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.path li::before {
+  content: counter(step, decimal-leading-zero);
+  font-size: var(--small);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.path li strong {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 2.3vw, 2.1rem);
+  line-height: 1.1;
+}
+.path li p {
+  max-width: none;
+}
+
+/* Method: the three figures of the ledger, in ink on the plaster */
+.ledger {
+  grid-column: 1/13;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap);
+  margin-top: clamp(16px, 2vw, 32px);
+}
+.ledger li {
+  font-size: var(--body);
+  line-height: 1.5;
+  max-width: 20em;
+}
+.ledger .stat {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(3.2rem, 6vw, 5.2rem);
+  line-height: 1;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.ledger-note {
+  grid-column: 5/11;
+  color: var(--muted);
+}
+
+/* Method: the table, set with space between rows and no rules */
+.table-full {
+  grid-column: 1/13;
+  margin-top: 36px;
+}
+.method-table-wrap {
+  overflow-x: auto;
+}
+.method-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--small);
+  line-height: 1.5;
+}
+.method-table caption {
+  text-align: left;
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  line-height: 1.15;
+  padding: 0 0 24px;
+}
+.method-table th,
+.method-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 14px 24px 14px 0;
+}
+.method-table th {
+  font-weight: 500;
+  color: var(--muted);
+}
+.method-table td:first-child {
+  font-weight: 500;
+}
+@media (max-width: 600px) {
+  .method-table,
+  .method-table tbody,
+  .method-table tr,
+  .method-table td {
+    display: block;
+    width: auto;
+  }
+  .method-table thead {
+    display: none;
+  }
+  .method-table caption {
+    display: block;
+  }
+  .method-table tr {
+    padding: 14px 0 18px;
+  }
+  .method-table td {
+    padding: 2px 0;
+  }
+  .method-table td::before {
+    content: attr(data-label) ": ";
+    font-weight: 500;
+    color: var(--muted);
+  }
+}
+
+/* Principles: an order that carries no meaning, so no numbers and no rules */
+.pr-list {
+  grid-column: 5/13;
+  list-style: none;
+  display: grid;
+  gap: 48px;
+}
+.pr-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  column-gap: var(--gap);
+}
+.pr-list h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 2.5vw, 2.3rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+.pr-list p {
+  max-width: 34em;
+}
+
+/* About */
+.about-lead {
+  grid-column: 1/13;
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  line-height: 1.32;
+  max-width: none;
+}
+
+/* Close of a project page */
+.next-project {
+  align-items: end;
+}
+.next-project .ask {
+  grid-column: 1/5;
+  justify-self: start;
+  font-weight: 500;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.85em 1.5em;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+.next-project .ask:active {
+  transform: scale(0.97);
+}
+.next-project .next {
+  grid-column: 5/13;
+  justify-self: end;
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  line-height: 1;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+.next-project .next::after {
+  content: " \2192";
+  color: var(--accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .next-project .next:hover {
+    color: var(--accent-hover);
+  }
+}
+
+/* Figure 1 on the Method page: the path as it really runs.
+   The main path is the site's one line with a ring at each step. Side exits are twigs off it.
+   The way to the founder is the heavier stretch. */
+.flow-fig {
+  grid-column: 1/13;
+}
+.flow-fig figcaption {
+  margin-top: 28px;
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  line-height: 1.15;
+}
+@media (min-width: 1001px) {
+  .flow-fig {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gap);
+    align-items: start;
+  }
+  .flow-fig figcaption {
+    grid-column: 1/5;
+    grid-row: 1;
+    margin-top: 0;
+  }
+  .flow-fig .flow {
+    grid-column: 5/13;
+    grid-row: 1;
+  }
+}
+.flow {
+  max-width: 46rem;
+  --tk: 4px;
+}
+.st,
+.br {
+  position: relative;
+  padding: 0 0 40px 40px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.br {
+  padding-left: 72px;
+}
+.st.last {
+  padding-bottom: 0;
+}
+.st::before,
+.br::before {
+  content: "";
+  position: absolute;
+  left: calc(8px - var(--tk) / 2);
+  width: var(--tk);
+  top: 13px;
+  bottom: -13px;
+  background: var(--line);
+}
+.st.last::before {
+  display: none;
+}
+.br::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  width: 40px;
+  top: calc(var(--ry, 13px) - var(--tk) / 2);
+  height: var(--tk);
+  background: var(--line);
+  border-radius: 4px;
+}
+.br.dash::after {
+  background: repeating-linear-gradient(90deg, var(--muted) 0 3px, transparent 3px 11px);
+}
+.rg {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 3px solid var(--line);
+  border-radius: 50%;
+  background: var(--bg);
+  z-index: 1;
+}
+.br .rg {
+  left: 40px;
+}
+.br.dash .rg {
+  border-color: var(--muted);
+}
+.br:has(.lbl) {
+  --ry: 33px;
+}
+.br:has(.lbl) .rg {
+  top: 25px;
+}
+.hv {
+  --tk: 8px;
+}
+.hv .rg {
+  width: 22px;
+  height: 22px;
+  border-width: 4px;
+  top: 2px;
+  left: -3px;
+}
+.br.hv .rg {
+  left: 37px;
+}
+.lbl {
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+}
+.ttl {
+  display: block;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.1;
+}
+.hv .ttl {
+  font-weight: 700;
+}
+.role {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+}
+.st dl {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 6em minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 4px;
+}
+.st dt {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.st dd {
+  margin: 0 0 6px;
+}
+.cnt {
+  margin-top: 12px;
+  font-weight: 500;
+}
+.flow-note {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 34em;
+}
+
+/* Tablet: its own composition */
+@media (max-width: 1000px) {
+  .pg-head > h1,
+  .h-fig .hd-text,
+  .h-solo .hd-text,
+  .h-fig .hero-fig,
+  .h-fig .fb-pic,
+  .h-plain .lead,
+  .lab-mark {
+    grid-column: 1/7;
+    grid-row: auto;
+  }
+  .lab-mark {
+    justify-self: start;
+    max-width: 180px;
+  }
+  .sec-label,
+  .sec-body,
+  .sec-figs,
+  .sec-problem .sec-body,
+  .sec-learned .sec-body,
+  .sec-intro .sec-body,
+  .ledger-note,
+  .pr-list {
+    grid-column: 1/7;
+  }
+  .path {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pr-list li {
+    grid-template-columns: 1fr;
+    row-gap: 12px;
+  }
+  .next-project .ask,
+  .next-project .next {
+    grid-column: 1/7;
+    justify-self: start;
+  }
+  .next-project .ask {
+    margin-bottom: 28px;
+  }
+}
+
+/* Phone */
+@media (max-width: 640px) {
+  .rl-phones {
+    grid-template-columns: 1fr;
+  }
+  .rl-phones .r1,
+  .sec-figs .rl-wide {
+    display: none;
+  }
+  .path {
+    grid-template-columns: 1fr;
+  }
+  .ledger {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
+  }
+  .ledger .stat {
+    font-size: 3rem;
+    margin-bottom: 6px;
+  }
+  .st dl {
+    grid-template-columns: 1fr;
+  }
+  .sec-learned .sec-body {
+    font-size: 1.5rem;
+  }
+}

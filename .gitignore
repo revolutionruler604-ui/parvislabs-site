@@ -1,0 +1,8 @@
+.seed/
+.impeccable/mocks/
+.impeccable/proto/
+.impeccable/answer.txt
+.impeccable/decision-payload.json
+.impeccable/brief-home.md
+.impeccable/review/
+*.log

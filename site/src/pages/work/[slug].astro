@@ -1,0 +1,144 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlackfinFigure from '../../components/BlackfinFigure.astro';
+import FrameBoardFigure from '../../components/FrameBoardFigure.astro';
+import AtlasFigure from '../../components/AtlasFigure.astro';
+import LabIcon from '../../components/LabIcon.astro';
+import { sectionsFromBody } from '../../lib/sections';
+import { contactHref } from '../../lib/contact';
+import rlHome1440 from '../../assets/img/rl-home-1440.webp';
+import rlHome390 from '../../assets/img/rl-home-390.webp';
+import rlCard1440 from '../../assets/img/rl-card-1440.webp';
+import rlCard390 from '../../assets/img/rl-card-390.webp';
+import rlGoal390 from '../../assets/img/rl-goal-390.webp';
+import '../../styles/figures.css';
+import '../../styles/inner.css';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: { project, next: projects[(index + 1) % projects.length] },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  next: CollectionEntry<'projects'>;
+}
+
+const { project, next } = Astro.props;
+const { intro, sections } = sectionsFromBody(project.body ?? '');
+const slug = project.id;
+const head = slug === 'blackfin' ? 'h-solo' : 'h-fig';
+const labKind = slug === 'atlas' ? 'bars' : 'wave';
+
+const labelOf = (heading: string) => heading.toLowerCase().replaceAll(' ', '-');
+const sectionClass: Record<string, string> = {
+  'The problem': 'sec-problem',
+  'What it does': 'sec-does',
+  'How it was built': 'sec-built',
+  'What we learned': 'sec-learned',
+};
+---
+
+<BaseLayout
+  inner
+  title={`${project.data.title} | Parvis Labs`}
+  description={project.data.line}
+>
+    <div class={`pg-head grid ${head}`}>
+      <h1 class="display">{project.data.title}</h1>
+      <div class="hd-text">
+        <p class="lede">
+          {project.data.seed && <span class="seed">{project.data.seed}</span>}
+          <span class="lead">{project.data.line}</span>
+        </p>
+        <p class="project-status">{project.data.status}</p>
+        {
+          project.data.links.length > 0 && (
+            <ul>
+              {project.data.links.map((link) => (
+                <li><a class="link" href={link.href}>{link.label}</a></li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+      {
+        slug === 'rich-life' && (
+          <figure class="hero-fig">
+            <div class="plate mat">
+              <picture class="hero-shot crop c-home">
+                <source media="(max-width: 640px)" srcset={rlHome390.src} type="image/webp" width="780" height="1688" />
+                <img src={rlHome1440.src} width="2880" height="1800" alt="Rich Life, the Home screen of an invented couple: $936 guilt-free left this month." fetchpriority="high" />
+              </picture>
+            </div>
+            <figcaption class="small cap">Guilt-free money left this month: $936 of $2,640, for an invented couple.</figcaption>
+          </figure>
+        )
+      }
+      {
+        slug === 'frame-board' && (
+          <figure class="fb-pic"><div class="plate"><FrameBoardFigure /></div></figure>
+        )
+      }
+      {
+        slug === 'atlas' ? (
+          <AtlasFigure />
+        ) : slug === 'language-coach' ? (
+          <figure class="lab-mark"><div class="plate"><LabIcon kind={labKind} /></div></figure>
+        ) : null
+      }
+    </div>
+
+    {
+      intro && (
+        <section class="sec sec-intro grid">
+          <div class="sec-body" set:html={intro} />
+        </section>
+      )
+    }
+
+    {
+      sections.map((section) => (
+        <section class={`sec grid ${sectionClass[section.heading] ?? ''}`} aria-labelledby={`h-${labelOf(section.heading)}`}>
+          <h2 class="mid sec-label" id={`h-${labelOf(section.heading)}`}>{section.heading}</h2>
+          <div class="sec-body" set:html={section.html} />
+          {
+            slug === 'rich-life' && section.heading === 'What it does' && (
+              <div class="sec-figs">
+                <figure class="rl-wide">
+                  <div class="plate mat"><div class="crop c-plan"><Image src={rlCard1440} width={2880} height={1800} widths={[400, 600, 900, 1200, 1600]} sizes="(max-width: 640px) 0px, (max-width: 1000px) 116vw, 80vw" format="webp" alt="Rich Life, the plan against what actually happened, and the goals, for an invented couple." loading="lazy" /></div></div>
+                  <figcaption class="small cap">The plan against what actually happened, and the goals, for an invented couple.</figcaption>
+                </figure>
+                <div class="rl-phones">
+                  <figure class="r1"><div class="plate mat"><div class="ph"><Image src={rlHome390} width={780} height={1688} widths={[390, 780]} sizes="(max-width: 640px) 0px, (max-width: 1000px) 30vw, 23vw" format="webp" alt="Rich Life, the Home screen on a phone, for an invented couple." loading="lazy" /></div></div><figcaption class="small cap">Home on a phone: guilt-free money left this month, $936, for an invented couple.</figcaption></figure>
+                  <figure class="r2"><div class="plate mat"><div class="ph"><Image src={rlCard390} width={780} height={1688} widths={[390, 780]} sizes="(max-width: 640px) calc(100vw - 64px), (max-width: 1000px) 30vw, 23vw" format="webp" alt="Rich Life, the plan screen on a phone, for an invented couple." loading="lazy" /></div></div><figcaption class="small cap">The plan against what actually happened, for an invented couple.</figcaption></figure>
+                  <figure class="r3"><div class="plate mat"><div class="ph"><Image src={rlGoal390} width={780} height={1688} widths={[390, 780]} sizes="(max-width: 640px) calc(100vw - 64px), (max-width: 1000px) 30vw, 23vw" format="webp" alt="Rich Life, the goal screen on a phone, for an invented couple." loading="lazy" /></div></div><figcaption class="small cap">Goals and what each needs a month, for an invented couple.</figcaption></figure>
+                </div>
+              </div>
+            )
+          }
+          {
+            slug === 'blackfin' && section.heading === 'What it does' && (
+              <div class="sec-figs wide">
+                <figure class="plate bf-fig">
+                  <BlackfinFigure />
+                  <figcaption class="bf-note">After every run, a separate check reads what happened.</figcaption>
+                </figure>
+              </div>
+            )
+          }
+        </section>
+      ))
+    }
+
+    <nav class="next-project grid" aria-label="Next project">
+      <a class="link ask" href={contactHref(project.data.title)}>Ask about it</a>
+      <a class="next" href={`/work/${next.id}/`}>{next.data.title}</a>
+    </nav>
+</BaseLayout>

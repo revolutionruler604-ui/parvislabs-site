@@ -1,0 +1,206 @@
+/* The Atlas demo figure. Tokens only: the ground, ink, line and the one blue. */
+.atlas-fig {
+  grid-column: 6 / 13;
+  grid-row: 2;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* The seven stay nights, a pill track that scrolls inside itself on a phone. */
+.atlas-seg {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line) 10%, transparent);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.atlas-seg::-webkit-scrollbar {
+  display: none;
+}
+.atlas-seg button {
+  appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex: none;
+  font-family: inherit;
+  color: inherit;
+  padding: 0.5em 1.05em;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 15px;
+  min-height: 44px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+.atlas-seg button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.atlas-seg button:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .atlas-seg button:not([aria-pressed="true"]):hover {
+    background: color-mix(in srgb, var(--line) 12%, transparent);
+  }
+}
+
+/* One stacked bar per room kind: booked ahead, then the rooms left. */
+.atlas-nights {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.atlas-night {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.atlas-night[hidden] {
+  display: none;
+}
+.atlas-row {
+  display: grid;
+  grid-template-columns: 6.2em minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 12px;
+}
+.atlas-key {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  min-width: 0;
+}
+.atlas-kind {
+  font-weight: 500;
+  font-size: 15px;
+}
+.atlas-cap {
+  color: var(--muted);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.atlas-bar {
+  display: flex;
+  height: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--line) 10%, transparent);
+}
+.atlas-fill {
+  display: block;
+  flex: none;
+  height: 100%;
+}
+.b1 {
+  background: color-mix(in srgb, var(--line) 100%, transparent);
+}
+.b2 {
+  background: color-mix(in srgb, var(--line) 72%, transparent);
+}
+.b3 {
+  background: color-mix(in srgb, var(--line) 48%, transparent);
+}
+.b4 {
+  background: color-mix(in srgb, var(--line) 26%, transparent);
+}
+.left {
+  background: var(--accent);
+}
+.atlas-remain {
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--accent);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The four booking windows, read as one line of swatches. */
+.atlas-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.atlas-legend-title {
+  font-weight: 500;
+  color: var(--ink);
+}
+.atlas-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.atlas-item i {
+  display: block;
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.atlas-left {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.35;
+  margin: 0;
+  max-width: 24em;
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+.atlas-note {
+  font-size: var(--small);
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.atlas-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 1000px) {
+  .atlas-fig {
+    grid-column: 1 / 7;
+    grid-row: auto;
+  }
+}
+@media (max-width: 640px) {
+  .atlas-fig {
+    grid-column: 1 / 13;
+  }
+  /* Seven short day names fit one phone row, so every night stays in view. */
+  .atlas-seg {
+    width: 100%;
+  }
+  .atlas-seg button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-seg button {
+    transition: none;
+  }
+}

@@ -1,0 +1,261 @@
+/* Fonts are served from this site. */
+@font-face{font-family:"Kaisei Opti";src:url("/fonts/kaisei-opti-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Kaisei Opti";src:url("/fonts/kaisei-opti-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Zen Kaku Gothic New";src:url("/fonts/zen-kaku-gothic-new-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Zen Kaku Gothic New";src:url("/fonts/zen-kaku-gothic-new-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Zen Kaku Gothic New";src:url("/fonts/zen-kaku-gothic-new-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+/*
+  Tokens, the same palette as the home page. Each colour is a plain value,
+  defined once per theme. The theme follows prefers-color-scheme; data-theme
+  on <html> overrides it. No colour appears anywhere else in the stylesheets.
+*/
+:root {
+  color-scheme: light;
+  --bg: #e7e2d6;
+  --ink: #1a1a18;
+  --muted: #5f584e;
+  --line: #2a2f28;
+  --accent: #2e4a8c;
+  --accent-fill: #2e4a8c;
+  --accent-hover: #223a72;
+  --on-accent: #e7e2d6;
+
+  --serif: "Kaisei Opti", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --gutter: clamp(20px, 4.4vw, 64px);
+  --gap: 24px;
+  --body: 17px;
+  --small: 15px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1b1e1a;
+    --ink: #e7e2d6;
+    --muted: #b8b09f;
+    --line: #cfc8b8;
+    --accent: #93a9ec;
+    --accent-fill: #93a9ec;
+    --accent-hover: #7790de;
+    --on-accent: #1a1a18;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1b1e1a;
+  --ink: #e7e2d6;
+  --muted: #b8b09f;
+  --line: #cfc8b8;
+  --accent: #93a9ec;
+  --accent-fill: #93a9ec;
+  --accent-hover: #7790de;
+  --on-accent: #1a1a18;
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #e7e2d6;
+  --ink: #1a1a18;
+  --muted: #5f584e;
+  --line: #2a2f28;
+  --accent: #2e4a8c;
+  --accent-fill: #2e4a8c;
+  --accent-hover: #223a72;
+  --on-accent: #e7e2d6;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: inherit;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+::selection {
+  background: var(--accent-fill);
+  color: var(--on-accent);
+}
+.wrap {
+  max-width: calc(1312px + 2 * var(--gutter));
+  margin-inline: auto;
+}
+/* Inner pages: the footer sits at the foot of the screen even when a page is short. */
+body > .wrap {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+body > .wrap > main {
+  flex: 1 0 auto;
+}
+.inner,
+.prose {
+  padding-inline: var(--gutter);
+}
+p {
+  max-width: 34em;
+}
+.small {
+  font-size: var(--small);
+  color: var(--muted);
+  line-height: 1.55;
+}
+.display {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5.3vw, 4.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.mid {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* Running text never ends a paragraph on one lonely word. */
+p, li, figcaption, dd {
+  text-wrap: pretty;
+}
+.link {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+}
+.skip-link:focus {
+  position: static;
+  display: block;
+  padding: 0.5rem 1.25rem;
+}
+
+/* Header and footer, the same as the home page */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 28px var(--gutter);
+}
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.write {
+  font-weight: 500;
+  color: var(--accent);
+  padding: 0.15em 0.5em;
+  margin-right: -0.5em;
+  border-radius: 999px;
+}
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  justify-content: space-between;
+  padding: 28px var(--gutter) 36px;
+  margin-top: clamp(96px, 11vw, 160px);
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+.foot nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1.6rem;
+}
+
+/* Plain pages: readable type for the log */
+.prose {
+  max-width: calc(42rem + 2 * var(--gutter));
+  padding-top: 40px;
+}
+.prose h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+  margin-bottom: 24px;
+}
+.prose h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.75rem;
+  line-height: 1.15;
+  margin: 40px 0 12px;
+}
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 28px 0 8px;
+}
+.prose p,
+.prose li {
+  margin-bottom: 12px;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+  margin-bottom: 12px;
+}
+.prose .project-seed {
+  font-weight: 500;
+}
+.prose .project-status {
+  color: var(--muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 1ms !important;
+  }
+}

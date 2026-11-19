@@ -1,0 +1,13 @@
+---
+interface Props {
+  kind: 'bars' | 'wave';
+}
+const { kind } = Astro.props;
+---
+{
+  kind === 'bars' ? (
+    <svg viewBox="10 0 140 120" role="img" aria-label="Three axes drawn as bars with end dots." width="140" height="120"><rect class="f-ink" x="10" y="22" width="120" height="6" rx="3"/><circle class="f-ink" cx="140" cy="25" r="9"/><rect class="f-ink" x="10" y="57" width="84" height="6" rx="3"/><circle class="f-ink" cx="104" cy="60" r="9"/><rect class="f-ink" x="10" y="92" width="102" height="6" rx="3"/><circle class="f-ink" cx="122" cy="95" r="9"/></svg>
+  ) : (
+    <svg viewBox="6 0 145 120" role="img" aria-label="A short waveform drawn as vertical bars." width="145" height="120"><rect class="f-ink" x="6" y="49" width="7" height="22" rx="3.5"/><rect class="f-ink" x="18.5" y="36" width="7" height="48" rx="3.5"/><rect class="f-ink" x="31" y="45" width="7" height="30" rx="3.5"/><rect class="f-ink" x="43.5" y="23" width="7" height="74" rx="3.5"/><rect class="f-ink" x="56" y="34" width="7" height="52" rx="3.5"/><rect class="f-ink" x="68.5" y="15" width="7" height="90" rx="3.5"/><rect class="f-ink" x="81" y="40" width="7" height="40" rx="3.5"/><rect class="f-ink" x="93.5" y="28" width="7" height="64" rx="3.5"/><rect class="f-ink" x="106" y="47" width="7" height="26" rx="3.5"/><rect class="f-ink" x="118.5" y="32" width="7" height="56" rx="3.5"/><rect class="f-ink" x="131" y="43" width="7" height="34" rx="3.5"/><rect class="f-ink" x="143.5" y="51" width="7" height="18" rx="3.5"/></svg>
+  )
+}

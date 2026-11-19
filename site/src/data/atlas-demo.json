@@ -1,0 +1,285 @@
+{
+  "hotelTotal": 150,
+  "nights": [
+    {
+      "date": "2026-11-20",
+      "short": "Fri",
+      "long": "Friday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 62,
+          "ahead": {
+            "over90": 14,
+            "d31to90": 18,
+            "d8to30": 17,
+            "last7": 13
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 54,
+          "ahead": {
+            "over90": 11,
+            "d31to90": 15,
+            "d8to30": 16,
+            "last7": 12
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 17,
+          "ahead": {
+            "over90": 4,
+            "d31to90": 5,
+            "d8to30": 4,
+            "last7": 4
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-21",
+      "short": "Sat",
+      "long": "Saturday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 67,
+          "ahead": {
+            "over90": 15,
+            "d31to90": 20,
+            "d8to30": 20,
+            "last7": 12
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 58,
+          "ahead": {
+            "over90": 12,
+            "d31to90": 17,
+            "d8to30": 18,
+            "last7": 11
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 19,
+          "ahead": {
+            "over90": 4,
+            "d31to90": 6,
+            "d8to30": 5,
+            "last7": 4
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-22",
+      "short": "Sun",
+      "long": "Sunday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 44,
+          "ahead": {
+            "over90": 12,
+            "d31to90": 14,
+            "d8to30": 11,
+            "last7": 7
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 36,
+          "ahead": {
+            "over90": 9,
+            "d31to90": 11,
+            "d8to30": 9,
+            "last7": 7
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 11,
+          "ahead": {
+            "over90": 3,
+            "d31to90": 3,
+            "d8to30": 3,
+            "last7": 2
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-23",
+      "short": "Mon",
+      "long": "Monday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 41,
+          "ahead": {
+            "over90": 10,
+            "d31to90": 13,
+            "d8to30": 10,
+            "last7": 8
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 33,
+          "ahead": {
+            "over90": 8,
+            "d31to90": 10,
+            "d8to30": 8,
+            "last7": 7
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 10,
+          "ahead": {
+            "over90": 2,
+            "d31to90": 3,
+            "d8to30": 3,
+            "last7": 2
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-24",
+      "short": "Tue",
+      "long": "Tuesday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 45,
+          "ahead": {
+            "over90": 11,
+            "d31to90": 14,
+            "d8to30": 11,
+            "last7": 9
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 38,
+          "ahead": {
+            "over90": 9,
+            "d31to90": 11,
+            "d8to30": 10,
+            "last7": 8
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 12,
+          "ahead": {
+            "over90": 3,
+            "d31to90": 3,
+            "d8to30": 3,
+            "last7": 3
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-25",
+      "short": "Wed",
+      "long": "Wednesday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 52,
+          "ahead": {
+            "over90": 12,
+            "d31to90": 16,
+            "d8to30": 13,
+            "last7": 11
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 47,
+          "ahead": {
+            "over90": 10,
+            "d31to90": 13,
+            "d8to30": 12,
+            "last7": 12
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 15,
+          "ahead": {
+            "over90": 3,
+            "d31to90": 4,
+            "d8to30": 4,
+            "last7": 4
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-11-26",
+      "short": "Thu",
+      "long": "Thursday",
+      "kinds": [
+        {
+          "name": "King",
+          "capacity": 70,
+          "booked": 63,
+          "ahead": {
+            "over90": 14,
+            "d31to90": 17,
+            "d8to30": 16,
+            "last7": 16
+          }
+        },
+        {
+          "name": "Two beds",
+          "capacity": 60,
+          "booked": 56,
+          "ahead": {
+            "over90": 11,
+            "d31to90": 14,
+            "d8to30": 15,
+            "last7": 16
+          }
+        },
+        {
+          "name": "Suite",
+          "capacity": 20,
+          "booked": 18,
+          "ahead": {
+            "over90": 4,
+            "d31to90": 5,
+            "d8to30": 5,
+            "last7": 4
+          }
+        }
+      ]
+    }
+  ]
+}

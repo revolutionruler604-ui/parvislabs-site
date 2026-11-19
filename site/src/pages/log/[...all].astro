@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('log');
+  if (entries.length === 0) return [];
+  return [{ params: { all: undefined } }];
+}
+
+const entries = (await getCollection('log')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<BaseLayout
+  title="Log | Parvis Labs"
+  description="Notes on what Parvis Labs builds and what each project teaches."
+>
+  <h1>Log</h1>
+  <ul class="projects">
+    {
+      entries.map((entry) => (
+        <li class="project">
+          <h2 class="project-title">{entry.data.title}</h2>
+          <p class="project-status">
+            <time datetime={entry.data.date.toISOString()}>
+              {entry.data.date.toISOString().slice(0, 10)}
+            </time>
+            {' '}
+            {entry.data.project}
+          </p>
+          <p>{entry.data.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

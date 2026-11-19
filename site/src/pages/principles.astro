@@ -1,0 +1,31 @@
+---
+import principles from '../data/principles.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/figures.css';
+import '../styles/inner.css';
+---
+
+<BaseLayout
+  inner
+  title="Principles | Parvis Labs"
+  description="The twelve principles Parvis Labs works by: how we think, what we build for, and how we work."
+>
+  <div class="pg-head grid h-plain">
+    <h1 class="display">Principles</h1>
+  </div>
+  {
+    principles.groups.map((group) => (
+      <section class="sec grid" aria-labelledby={group.title.toLowerCase().replaceAll(' ', '-')}>
+        <h2 class="mid sec-label" id={group.title.toLowerCase().replaceAll(' ', '-')}>{group.title}</h2>
+        <ol class="pr-list" role="list">
+          {group.items.map((item) => (
+            <li>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>

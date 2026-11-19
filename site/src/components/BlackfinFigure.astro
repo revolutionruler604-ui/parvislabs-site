@@ -1,0 +1,119 @@
+---
+// How a Blackfin trade moves, drawn three ways: desktop, tablet and phone.
+// The path is the site's one line with a ring at each step. The guard is the
+// heavy stretch of it: thicker line, larger type. Colours come from classes.
+type Step = { t: string; l?: string[] };
+const wide: Record<string, Step> = {
+  clock: { t: 'The clock', l: ['10:32 and 3:45,', 'New York time'] },
+  runbook: { t: 'The bot reads', l: ['its written steps'] },
+  scan: { t: 'Scan', l: ['Companies that jumped', 'on earnings'] },
+  checks: { t: 'Three checks' },
+  ticket: { t: 'A ticket,', l: ['written to', 'the journal'] },
+  guard: { t: 'The guard', l: ['Code the bot cannot edit.', 'One ticket, one account,', 'a ceiling on size'] },
+  broker: { t: 'The broker' },
+  stop: { t: 'A stop held by', l: ['the broker.', 'Out after ten', 'trading days'] },
+};
+const tablet: Record<string, Step> = {
+  ...wide,
+  clock: { t: 'The clock', l: ['10:32 and 3:45,', 'New York time'] },
+  scan: { t: 'Scan', l: ['Companies that', 'jumped on', 'earnings'] },
+  guard: { t: 'The guard', l: ['Code the bot', 'cannot edit.', 'One ticket,', 'one account,', 'a ceiling on size'] },
+};
+const phone: Step[] = [
+  { t: 'The clock', l: ['10:32 and 3:45, New York time'] },
+  { t: 'The bot reads its written steps' },
+  { t: 'Scan', l: ['Companies that jumped on earnings'] },
+  { t: 'Three checks' },
+  { t: 'A ticket, written to the journal' },
+  { t: 'The guard', l: ['Code the bot cannot edit.', 'One ticket, one account,', 'a ceiling on size'] },
+  { t: 'The broker' },
+  { t: 'A stop held by the broker.', l: ['Out after ten trading days'] },
+];
+const label = 'How a Blackfin trade moves from the clock to the broker, with a guard the bot cannot edit in the middle.';
+
+// Desktop and tablet: two rows on one line that turns back on itself.
+type Layout = {
+  w: number; h: number; xs1: number[]; xs2: number[]; y1: number; y2: number; turn: number; back: number;
+  ts: number; ls: number; lh: number; gts: number; gls: number; glh: number;
+};
+const lay = (steps: Record<string, Step>, c: Layout) => {
+  const row1 = ['clock', 'runbook', 'scan', 'checks'];
+  const row2 = ['ticket', 'guard', 'broker', 'stop'];
+  const nodes = [
+    ...row1.map((k, i) => ({ k, x: c.xs1[i], y: c.y1 })),
+    ...row2.map((k, i) => ({ k, x: c.xs2[i], y: c.y2 })),
+  ].map((n) => {
+    const guard = n.k === 'guard';
+    const s = steps[n.k];
+    const ts = guard ? c.gts : c.ts;
+    const ls = guard ? c.gls : c.ls;
+    const lh = guard ? c.glh : c.lh;
+    const ty = n.y + (guard ? c.gts + 22 : c.ts + 28);
+    return {
+      ...n,
+      guard,
+      ts,
+      ls,
+      ty,
+      lines: (s.l ?? []).map((text, i) => ({ text, y: ty + (guard ? 34 : 28) + i * lh })),
+      title: s.t,
+    };
+  });
+  const r = c.turn;
+  const d = `M8 ${c.y1} H${r - 60} C${r} ${c.y1} ${r} ${c.back} ${r - 60} ${c.back} H48 C20 ${c.back} 8 ${c.back + 10} 8 ${c.back + 36} V${c.y2} H${c.xs2[3] + 8}`;
+  const g = nodes.find((n) => n.guard)!;
+  const guardEnd = nodes.find((n) => n.k === 'broker')!.x - 52;
+  return { nodes, d, gx: g.x + 8, gy: g.y, guardEnd };
+};
+const desk = lay(wide, { w: 1200, h: 500, xs1: [0, 315, 630, 945], xs2: [0, 266, 672, 938], y1: 50, y2: 320, turn: 1170, back: 200, ts: 20, ls: 18, lh: 24, gts: 34, gls: 19, glh: 25 });
+const tab = lay(tablet, { w: 700, h: 470, xs1: [0, 183, 366, 549], xs2: [0, 164, 412, 554], y1: 40, y2: 280, turn: 684, back: 190, ts: 17, ls: 15, lh: 21, gts: 28, gls: 16, glh: 22 });
+
+// Phone: one vertical stretch of the line.
+let y = 16;
+const rows = phone.map((s, i) => {
+  const guard = s.t === 'The guard';
+  const ts = guard ? 30 : 18;
+  const ls = guard ? 17 : 16;
+  const lh = guard ? 23 : 24;
+  const row = { ...s, guard, ts, ls, y, ty: y + ts / 3 + 4, lines: (s.l ?? []).map((text, j) => ({ text, y: y + ts / 3 + 4 + (guard ? 32 : 26) + j * lh })) };
+  const bottom = row.lines.length ? row.lines[row.lines.length - 1].y : row.ty;
+  y = bottom + 46;
+  return row;
+});
+const phoneH = y - 26;
+const gRow = rows.find((r) => r.guard)!;
+const gBottom = gRow.lines[gRow.lines.length - 1].y + 6;
+---
+<svg class="fig-d" viewBox="0 0 1200 500" role="img" aria-labelledby="figt-d"><title id="figt-d">{label}</title>
+  <path class="f-line" d={desk.d} />
+  <path class="f-guard-line" d={`M${desk.gx} ${desk.gy} H${desk.guardEnd}`} />
+  {desk.nodes.map((n) => (
+    <>
+      <circle class="f-joint" cx={n.x + 8} cy={n.y} r={n.guard ? 10 : 8} />
+      <text x={n.x} y={n.ty} font-size={n.ts} class={n.guard ? 'f-fig-ink f-guard-title' : 'f-fig-ink f-title'}>{n.title}</text>
+      {n.lines.map((l) => <text x={n.x} y={l.y} font-size={n.ls} class={n.guard ? 'f-fig-ink f-guard-ink' : 'f-fig-ink'}>{l.text}</text>)}
+    </>
+  ))}
+</svg>
+<svg class="fig-t" viewBox="0 0 700 470" role="img" aria-labelledby="figt-t"><title id="figt-t">{label}</title>
+  <path class="f-line" d={tab.d} />
+  <path class="f-guard-line" d={`M${tab.gx} ${tab.gy} H${tab.guardEnd}`} />
+  {tab.nodes.map((n) => (
+    <>
+      <circle class="f-joint" cx={n.x + 8} cy={n.y} r={n.guard ? 10 : 8} />
+      <text x={n.x} y={n.ty} font-size={n.ts} class={n.guard ? 'f-fig-ink f-guard-title' : 'f-fig-ink f-title'}>{n.title}</text>
+      {n.lines.map((l) => <text x={n.x} y={l.y} font-size={n.ls} class={n.guard ? 'f-fig-ink f-guard-ink' : 'f-fig-ink'}>{l.text}</text>)}
+    </>
+  ))}
+</svg>
+<svg class="fig-m" viewBox={`0 0 340 ${phoneH}`} role="img" aria-labelledby="figt-m"><title id="figt-m">{label}</title>
+  <path class="f-line" d={`M10 ${rows[0].y} V${rows[rows.length - 1].y}`} />
+  <path class="f-guard-line" d={`M10 ${gRow.y} V${gBottom}`} />
+  {rows.map((n) => (
+    <>
+      <circle class="f-joint" cx="10" cy={n.y} r={n.guard ? 10 : 8} />
+      <text x="38" y={n.ty} font-size={n.ts} class={n.guard ? 'f-fig-ink f-guard-title' : 'f-fig-ink f-title'}>{n.t}</text>
+      {n.lines.map((l) => <text x="38" y={l.y} font-size={n.ls} class={n.guard ? 'f-fig-ink f-guard-ink' : 'f-fig-ink'}>{l.text}</text>)}
+    </>
+  ))}
+</svg>
