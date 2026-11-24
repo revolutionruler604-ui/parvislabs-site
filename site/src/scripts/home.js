@@ -189,7 +189,7 @@ import { isLive } from './live.js';
     { name: 'Language Coach', place: 'Strait of Magellan', side: -1 },
     { name: 'Atlas', place: 'Valparaíso', side: -1 },
     { name: 'Rich Life for everyone', place: 'Callao', side: -1 },
-    { name: 'Home operating system', place: 'Huatulco', side: -1 },
+    { name: 'Frame Board, second home', place: 'Huatulco', side: -1 },
     { name: 'More Blackfin strategies', place: 'California', side: -1 },
     { place: 'Ternate', side: 1 }, { place: 'Java', side: -1 }, { place: 'Cape of Good Hope', side: 1 }, { place: 'Sierra Leone', side: 1 },
     { name: 'Plymouth', side: 1 }
