@@ -6,7 +6,7 @@ featured: true
 seed: One screen.
 line: "The kitchen TV becomes a paper notice board. The phone is the remote."
 links: []
-draft: true
+draft: false
 ---
 
 ## The problem

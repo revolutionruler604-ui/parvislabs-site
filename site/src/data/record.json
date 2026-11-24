@@ -1,11 +1,11 @@
 {
   "from": "2026-11-05",
-  "asOf": "2026-11-18",
-  "reviewed": 99,
+  "asOf": "2026-11-23",
+  "reviewed": 105,
   "foundAfterMerge": 1,
   "foundAt": [
     4
   ],
-  "tookFounderTime": 20,
-  "founderMinutes": 42
+  "tookFounderTime": 21,
+  "founderMinutes": 47
 }

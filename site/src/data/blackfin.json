@@ -1,10 +1,10 @@
 {
   "liveSince": "2026-11-02",
-  "asOf": "2026-11-18",
-  "tradingDays": 12,
-  "companiesRead": 186,
-  "entriesRefused": 48,
+  "asOf": "2026-11-23",
+  "tradingDays": 15,
+  "companiesRead": 192,
+  "entriesRefused": 49,
   "tradesOpened": 2,
-  "tradesClosed": 1,
-  "changePct": "-1.12"
+  "tradesClosed": 2,
+  "changePct": "-4.72"
 }

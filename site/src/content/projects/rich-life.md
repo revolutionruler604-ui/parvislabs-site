@@ -8,7 +8,7 @@ line: "Every dollar counted once, for two people with one plan."
 links:
   - label: See Rich Life
     href: https://richlife.parvislabs.com/
-draft: true
+draft: false
 ---
 
 ## The problem
@@ -21,7 +21,7 @@ Rich Life puts a couple's accounts in one place and counts every dollar once. A 
 
 Home opens on one number: guilt-free money left this month. Every figure opens to the rows behind it, with the reason any row is left out. Together holds the shared plan and builds the agenda for a monthly money meeting.
 
-Both partners see the whole household. One exception: guilt-free purchases on an account that is yours alone show to your partner only as a monthly total and count per category. The purchases themselves never reach your partner's screen, unless you choose to share a category.
+Both partners see the whole household, with one exception. Guilt-free money stays guilt-free: your partner sees a monthly total and count for each category, not the purchases behind them.
 
 ## How it was built
 

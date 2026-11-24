@@ -6,7 +6,7 @@ featured: true
 seed: ""
 line: "A trading bot that works alone, inside limits it cannot change."
 links: []
-draft: true
+draft: false
 ---
 
 ## The problem
