@@ -29,7 +29,7 @@ What each project may show. When in doubt, leave it out and ask. This table is t
 | --- | --- | --- |
 | Rich Life Dashboard | Feature | Demo household only. Never real household figures |
 | Language Coach | Feature, once it runs | The owner's own recordings stay private |
-| Frame Board / Egloo | Yes | No home network, doorbell or account details |
+| Frame Board / Egloo | Yes | No mention of the home network, doorbell or camera, and no account details. Nothing about the real child: no name, age, birth date, photos, schedule times or health details (Nov 25 2026). Demo boards use an invented family |
 | Blackfin | Feature (decided Nov 12 2026, widened Nov 13 2026) | The method, the idea behind it, counts of stocks read, orders refused and trades made, and one percent figure for the account, which may be negative, shown live and refreshed each minute (Nov 14 2026). Never the value of the account, any dollar amount, the starting amount, tickers, share counts, account numbers, keys or broker logins |
 | Chicken coop | No (removed Nov 13 2026) | Not on the site |
 | Atlas | In the lab, a brief glimpse only (decided Nov 12 2026, demo added Nov 14 2026) | A short description of a three-dimensional analysis engine for hotel revenue management, plus one small demo on an invented hotel whose every number is made up, captioned as such. The public version will rest on the owner's own knowledge and be independent of any employer data. No employer name, data, property names, rates or any money figure, internal terms, or screens made from real work data |

@@ -39,7 +39,7 @@ One founder with a day job, and a crew of AI agents that plan, build and review 
 - The chicken coop project is removed from the site (Nov 13 2026).
 - Rich Life: only the invented showcase household may appear. Never real household figures.
 - Blackfin: the method and the idea behind it, plus counts of stocks read, orders refused and trades made, and one results figure: the account's percent change since it went live, shown live on the home page. Never a dollar amount, the account's value, the starting amount, tickers, share counts or account details.
-- Frame Board: a real board rendered from randomized, invented household data. No home network, doorbell or account details.
+- Frame Board: a real board rendered from randomized, invented household data. No mention of the home network, doorbell or camera, and no account details. Nothing about the real child: no name, age, birth date, photos, schedule times or health details.
 - Atlas: a short description, plus one small demo on an invented hotel, captioned as made up. No employer name, data, property names, rates or any money figure, or internal terms.
 - No named competitor on the page. Say what most money apps do and show what Rich Life does instead.
 - Light and dark, phone first.

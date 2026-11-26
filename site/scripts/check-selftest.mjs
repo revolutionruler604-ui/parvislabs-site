@@ -107,6 +107,31 @@ const tests = [
     expect: ['Atlas demo without its made-up caption'],
   },
   {
+    name: 'Frame Board, an age',
+    plant: (dir) => edit(join(dir, 'work', 'frame-board', 'index.html'), beforeBody('<p>She is five weeks old.</p>')),
+    expect: ['private family detail'],
+  },
+  {
+    name: 'Frame Board, a feed time',
+    plant: (dir) => edit(join(dir, 'work', 'frame-board', 'index.html'), beforeBody('<p>Last feed at 3:40 a.m.</p>')),
+    expect: ['private family detail'],
+  },
+  {
+    name: 'Frame Board, the doorbell',
+    plant: (dir) => edit(join(dir, 'work', 'frame-board', 'index.html'), beforeBody('<p>The doorbell shows on the TV.</p>')),
+    expect: ['private family detail'],
+  },
+  {
+    name: 'Frame Board, a hyphenated age',
+    plant: (dir) => edit(join(dir, 'work', 'frame-board', 'index.html'), beforeBody('<p>Our five-week-old naps.</p>')),
+    expect: ['private family detail'],
+  },
+  {
+    name: 'Frame Board, home section',
+    plant: (dir) => edit(join(dir, 'index.html'), (html) => html.replace('id="frame-board">', 'id="frame-board"><p>The camera sees the porch.</p>')),
+    expect: ['private family detail'],
+  },
+  {
     name: 'placeholder text',
     plant: (dir) => edit(join(dir, 'index.html'), beforeBody('TODO')),
     expect: ['placeholder text'],

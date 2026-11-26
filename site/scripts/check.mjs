@@ -119,6 +119,24 @@ for (const file of pages) {
     if (/\$\s?\d/.test(text)) problems.push(`${page}: money figure on the Atlas page`);
   }
 
+  // Frame Board shows features, never the real family (CLAUDE.md, the disclosure table): no child's age or
+  // birth date, no health details, no schedule times, and no mention of the home network, doorbell or camera.
+  // It reads the Frame Board page and the Frame Board section of the home page, as text without tags.
+  const fbHtml = page === 'work/frame-board/index.html' ? html
+    : page === 'index.html' ? (/id="frame-board"[\s\S]*?(?=<section[^>]*id="next")/.exec(html) ?? [''])[0] : '';
+  if (fbHtml) {
+    const fbText = normalize(fbHtml.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ').replace(/<[^>]+>/g, ' '));
+    const num = '(?:\\d+|an?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)';
+    const fbPrivate = new RegExp([
+      `\\b${num}[\\s-]*(?:days?|weeks?|months?|years?)[\\s-]*old\\b`,
+      '\\bnewborn\\b', '\\bborn\\s+\\w', '\\bbirth\\s?(?:day|date)\\b', '\\bdue\\s+date\\b',
+      '\\b(?:fever|temperature|medicine|medication|dose|weighs|weight|pediatrician|jaundice|reflux|diagnos\\w*)\\b',
+      '\\b\\d{1,2}(?::\\d{2})?\\s?(?:a\\.m\\.|p\\.m\\.|am\\b|pm\\b)', '\\b\\d{1,2}:\\d{2}\\b',
+      '\\b(?:doorbell|camera|wi-?fi|password|ip address|router)\\b',
+    ].join('|'), 'i').exec(fbText);
+    if (fbPrivate) problems.push(`${page}: private family detail "${fbPrivate[0]}"`);
+  }
+
   for (const tag of html.match(/<[^>]+>/g) ?? []) {
     const name = tagName(tag);
     const src = attribute(tag, 'src');
