@@ -1,0 +1,102 @@
+---
+import data from '../data/atlas-demo.json';
+import '../styles/atlas.css';
+
+const hotelTotal = data.nights[0].kinds.reduce((sum, kind) => sum + kind.capacity, 0);
+const leftOf = (kind) => kind.capacity - kind.booked;
+const leftIn = (night) => night.kinds.reduce((sum, kind) => sum + leftOf(kind), 0);
+const summaryOf = (night) =>
+  `${night.long}. ` +
+  night.kinds.map((kind) => `${kind.name}: ${kind.booked} booked, ${leftOf(kind)} left`).join('. ') +
+  `. ${leftIn(night)} rooms left of ${hotelTotal}.`;
+const levels = [
+  ['over90', 'Over 90 days'],
+  ['d31to90', '31 to 90 days'],
+  ['d8to30', '8 to 30 days'],
+  ['last7', '7 days or less'],
+];
+const first = data.nights[0];
+---
+
+<figure class="atlas-fig" aria-describedby="atlas-summary">
+  <div class="atlas-seg">
+    {data.nights.map((night, i) => (
+      <button
+        type="button"
+        aria-pressed={i === 0 ? 'true' : 'false'}
+        aria-label={night.long}
+        data-night={i}
+        data-long={night.long}
+        data-left={leftIn(night)}
+        data-total={hotelTotal}
+        data-summary={summaryOf(night)}
+      >
+        {night.short}
+      </button>
+    ))}
+  </div>
+
+  <div class="atlas-nights">
+    {data.nights.map((night, i) => (
+      <div class="atlas-night" data-night={i} hidden={i !== 0}>
+        {night.kinds.map((kind) => (
+          <div class="atlas-row">
+            <div class="atlas-key">
+              <span class="atlas-kind">{kind.name}</span>
+              <span class="atlas-cap">{kind.capacity} rooms</span>
+            </div>
+            <div class="atlas-bar" aria-hidden="true">
+              {levels.map(([key], level) => (
+                <i
+                  class={`atlas-fill b${level + 1}`}
+                  style={`width:${((kind.ahead[key] / kind.capacity) * 100).toFixed(4)}%`}
+                />
+              ))}
+              {leftOf(kind) > 0 && (
+                <i
+                  class="atlas-fill left"
+                  style={`width:${((leftOf(kind) / kind.capacity) * 100).toFixed(4)}%`}
+                />
+              )}
+            </div>
+            <div class="atlas-remain">{leftOf(kind)} left</div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+
+  <div class="atlas-legend">
+    <span class="atlas-legend-title">Booked how far ahead</span>
+    {levels.map(([, label], level) => (
+      <span class="atlas-item"><i class={`b${level + 1}`} aria-hidden="true"></i>{label}</span>
+    ))}
+    <span class="atlas-item"><i class="left" aria-hidden="true"></i>Rooms left</span>
+  </div>
+
+  <p class="atlas-left">{leftIn(first)} rooms left of {hotelTotal} on {first.long}.</p>
+  <p class="atlas-sr" id="atlas-summary" aria-live="polite">{summaryOf(first)}</p>
+  <figcaption class="atlas-note">An invented hotel. Every number here is made up.</figcaption>
+</figure>
+
+<script>
+  (() => {
+    const fig = document.querySelector<HTMLElement>('.atlas-fig');
+    if (!fig) return;
+    const buttons = Array.from(fig.querySelectorAll('.atlas-seg button'));
+    const nights = Array.from(fig.querySelectorAll('.atlas-night'));
+    const line = fig.querySelector('.atlas-left');
+    const summary = fig.querySelector('.atlas-sr');
+    const pick = (index) => {
+      buttons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+      nights.forEach((night, i) => {
+        night.hidden = i !== index;
+      });
+      const button = buttons[index];
+      const left = Number(button.dataset.left);
+      line.textContent = `${left} ${left === 1 ? 'room' : 'rooms'} left of ${button.dataset.total} on ${button.dataset.long}.`;
+      summary.textContent = button.dataset.summary;
+    };
+    buttons.forEach((button, index) => button.addEventListener('click', () => pick(index)));
+  })();
+</script>

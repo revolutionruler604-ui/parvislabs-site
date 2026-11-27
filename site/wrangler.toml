@@ -1,0 +1,9 @@
+# Cloudflare Pages settings for the site. The store holds one reading: {pct, at}.
+# The write token is a Pages secret (BLACKFIN_FEED_TOKEN) and is never in this file.
+name = "parvislabs-site"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-11-01"
+
+[[kv_namespaces]]
+binding = "LIVE"
+id = "d816f1eea1534ad38522dcd0f23fd6df"

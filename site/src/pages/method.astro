@@ -1,0 +1,175 @@
+---
+import { getEntry } from 'astro:content';
+import { marked } from 'marked';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import record from '../data/record.json';
+import '../styles/figures.css';
+import '../styles/inner.css';
+
+const entry = await getEntry('pages', 'method');
+if (!entry) throw new Error('method page copy is missing');
+
+// The figures come from the route log snapshot the home page uses (scripts/record-snapshot.py),
+// so the two pages cannot disagree. The copy names a figure in braces.
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const dateOf = (iso: string) => {
+  const [year, month, day] = iso.split('-').map(Number);
+  return { year, month: MONTHS[month - 1], day };
+};
+const from = dateOf(record.from);
+const to = dateOf(record.asOf);
+const span =
+  from.year !== to.year
+    ? `${from.month} ${from.day}, ${from.year} to ${to.month} ${to.day}, ${to.year}`
+    : from.month !== to.month
+      ? `${from.month} ${from.day} to ${to.month} ${to.day}, ${to.year}`
+      : `${from.month} ${from.day} to ${to.day}, ${to.year}`;
+const figures: Record<string, string | number> = {
+  span,
+  reviewed: record.reviewed,
+  found: record.foundAt.length,
+  none: record.reviewed - record.tookFounderTime,
+  some: record.tookFounderTime,
+  minutes: record.founderMinutes,
+};
+const fill = (text: string) =>
+  text.replace(/\{(\w+)\}/g, (_, key: string) => {
+    if (!Object.hasOwn(figures, key)) throw new Error(`method copy asks for a figure the record does not hold: ${key}`);
+    return String(figures[key]);
+  });
+
+const [top, ...chunks] = fill((entry.body ?? '').replace(/\r\n/g, '\n')).trim().split(/^## /m);
+const title = /^#\s+(.+)$/m.exec(top)?.[1].trim() ?? '';
+const lead = marked.parse(top.replace(/^#\s+.+$/m, '').trim(), { async: false }) as string;
+
+const tablePattern = /<div class="method-table-wrap">[\s\S]*?<\/table>\s*<\/div>/;
+const sections = chunks.map((chunk) => {
+  const newline = chunk.indexOf('\n');
+  const heading = chunk.slice(0, newline).trim();
+  let text = chunk.slice(newline + 1).trim();
+  const table = tablePattern.exec(text)?.[0] ?? '';
+  text = text.replace(tablePattern, '').trim();
+  return { heading, text, table };
+});
+
+const id = (heading: string) => `h-${heading.toLowerCase().replaceAll(' ', '-')}`;
+const html = (text: string) => marked.parse(text, { async: false }) as string;
+
+// The path: the opening line, then one panel for each bold step.
+function splitPath(text: string) {
+  const paragraphs = text.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean);
+  const steps = paragraphs.filter((part) => part.startsWith('**'));
+  const intro = paragraphs.filter((part) => !part.startsWith('**')).join('\n\n');
+  return {
+    intro,
+    steps: steps.map((step) => {
+      const match = /^\*\*(.+?)\*\*\s*([\s\S]*)$/.exec(step);
+      return { name: match?.[1] ?? '', body: match?.[2] ?? '' };
+    }),
+  };
+}
+
+// The ledger: the lead-in, the figures, and a closing line when the copy has one.
+function splitLedger(text: string) {
+  const lines = text.split('\n');
+  const bullets = lines.filter((line) => line.startsWith('- ')).map((line) => line.slice(2));
+  const rest = lines.filter((line) => !line.startsWith('- ')).join('\n').trim();
+  const [intro, ...after] = rest.split(/\n\s*\n/);
+  return { intro, bullets, after: after.join('\n\n') };
+}
+const withStat = (text: string) => {
+  const match = /^(\d+)\s+([\s\S]*)$/.exec(text);
+  const inline = (value: string) => marked.parseInline(value, { async: false }) as string;
+  return match ? `<span class="stat">${match[1]}</span> ${inline(match[2])}` : inline(text);
+};
+---
+
+<BaseLayout inner title="Method | Parvis Labs" description={entry.data.description}>
+  <div class="pg-head grid h-plain">
+    <h1 class="display">{title}</h1>
+    <div class="lead" set:html={lead} />
+  </div>
+
+  {
+    sections.map((section) => {
+      if (section.heading === 'The path') {
+        const path = splitPath(section.text);
+        return (
+          <>
+            <section class="sec grid" aria-labelledby={id(section.heading)}>
+              <h2 class="mid sec-label" id={id(section.heading)}>{section.heading}</h2>
+              <div class="sec-body" set:html={html(path.intro)} />
+              <ol class="path" role="list">
+                {path.steps.map((step) => (
+                  <li>
+                    <strong set:html={marked.parseInline(step.name, { async: false })} />
+                    <p set:html={marked.parseInline(step.body, { async: false })} />
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <div class="grid">
+              <figure class="flow-fig">
+                <ul class="visually-hidden">
+                  <li>Plan: architect.</li>
+                  <li>Side exit Stop and report (same error twice, a blocking check, a file outside its copy): arrow back to Plan, labelled "next brief".</li>
+                  <li>Two exits:</li>
+                  <li>Held: arrow to Fix brief, then back to Build.</li>
+                  <li>Cut down or rethought: a box off the loop, with an arrow back to Plan and a dashed arrow to the founder ("a loop that will not close").</li>
+                  <li>Passes, then a fork:</li>
+                  <li>Main branch, drawn heavier: Merges on the checks.</li>
+                  <li>Side branch: Founder decides (build or not, money and privacy policy, anything public, a stuck loop).</li>
+                  <li>Both branches join at Record (builder, reviewer, rounds, serious findings, founder minutes, bugs found after merge).</li>
+                </ul>
+                <div class="flow">
+                  <div class="st"><i class="rg"></i><strong class="ttl">Plan</strong><span class="role">architect</span>
+                    <dl><dt>May</dt><dd>write the brief, its proof command and its file list; rule on findings</dd><dt>May not</dt><dd>build</dd></dl>
+                  </div>
+                  <div class="st"><i class="rg"></i><strong class="ttl">Build</strong><span class="role">builder, low-cost model in most changes</span>
+                    <dl><dt>May</dt><dd>edit the allowed files in its own copy; save at each passing step</dd><dt>May not</dt><dd>publish, skip the save scan, pick the costlier model tier</dd></dl>
+                  </div>
+                  <div class="br"><span class="lbl">next brief</span><i class="rg"></i><strong class="ttl">Stop and report</strong><span class="role">same error twice, a blocking check, a file outside its copy</span></div>
+                  <div class="st"><i class="rg"></i><strong class="ttl">Review</strong><span class="role">another agent, in most changes on a different model family</span>
+                    <dl><dt>May</dt><dd>read, run the checks, plant faults in a scratch copy</dd><dt>May not</dt><dd>edit the change</dd></dl>
+                  </div>
+                  <div class="br"><span class="lbl">Held</span><i class="rg"></i><strong class="ttl">Fix brief</strong></div>
+                  <div class="br dash"><span class="lbl">a loop that will not close</span><i class="rg"></i><strong class="ttl">Cut down or rethought</strong>
+                    <p class="flow-note">The rule: after two reviews that hold a change, it is cut down or rethought.</p>
+                  </div>
+                  <div class="st hv"><i class="rg"></i><strong class="ttl">Passes</strong></div>
+                  <div class="br hv"><i class="rg"></i><strong class="ttl">Founder decides</strong><span class="role">build or not, money and privacy policy, anything public, a stuck loop</span><p class="cnt">{figures.some} of {figures.reviewed} took some of the founder's time.</p></div>
+                  <div class="st hv"><i class="rg"></i><strong class="ttl">Merges on the checks</strong><p class="cnt">{figures.none} of {figures.reviewed} took none of the founder's time.</p></div>
+                  <div class="st last"><i class="rg"></i><strong class="ttl">Record</strong><span class="role">builder, reviewer, rounds, serious findings, founder minutes, bugs found after merge</span></div>
+                </div>
+                <figcaption>The path as it really runs</figcaption>
+              </figure>
+            </div>
+          </>
+        );
+      }
+
+      if (section.heading === 'The ledger') {
+        const ledger = splitLedger(section.text);
+        return (
+          <section class="sec grid ledger-sec" aria-labelledby={id(section.heading)}>
+            <h2 class="mid sec-label" id={id(section.heading)}>{section.heading}</h2>
+            <div class="sec-body" set:html={html(ledger.intro)} />
+            <ul class="ledger">
+              {ledger.bullets.map((bullet) => <li set:html={withStat(bullet)} />)}
+            </ul>
+            {ledger.after && <div class="ledger-note sec-body" set:html={html(ledger.after)} />}
+          </section>
+        );
+      }
+
+      return (
+        <section class="sec grid" aria-labelledby={id(section.heading)}>
+          <h2 class="mid sec-label" id={id(section.heading)}>{section.heading}</h2>
+          <div class="sec-body" set:html={html(section.text)} />
+          {section.table && <div class="table-full" set:html={section.table} />}
+        </section>
+      );
+    })
+  }
+</BaseLayout>

@@ -1,0 +1,26 @@
+{
+  "name": "parvis-labs-site",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build.mjs",
+    "preview": "astro preview",
+    "shots": "node scripts/shots.mjs",
+    "check": "node scripts/check.mjs",
+    "check:release": "node scripts/check.mjs --release",
+    "check:selftest": "node scripts/check-selftest.mjs",
+    "test:schedule": "node scripts/test-schedule.mjs",
+    "copy:match": "node scripts/copy-match.mjs",
+    "copy:selftest": "node scripts/copy-match.mjs --selftest",
+    "proof": "npm run test:schedule && node scripts/test-live.mjs && node scripts/atlas-data-check.mjs && npm run build && npm run shots && npm run check && npm run check:selftest && npm run copy:match && npm run copy:selftest"
+  },
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "marked": "^15.0.0",
+    "playwright": "^1.50.0"
+  }
+}

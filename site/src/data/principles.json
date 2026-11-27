@@ -1,0 +1,32 @@
+{
+  "note": "Approved by the owner on Nov 12 2026. Do not change a word.",
+  "groups": [
+    {
+      "title": "How we think",
+      "items": [
+        { "title": "Breadth and depth, both.", "body": "Work has always asked people to choose: know one field deeply, or many lightly. That was never a limit of the mind. It was a limit of hours. AI gives the hours back, and a well-designed process turns them into depth. We go wide, and deep wherever we go." },
+        { "title": "Knowledge has no passport.", "body": "The walls between industries were built for people who had to pick one. They are coming down. We start from first principles and take what works from wherever it lives: a clinic, a newsroom, a factory floor. An idea needs no credentials here. It needs evidence." },
+        { "title": "Aim one level up.", "body": "Every task is a clue to a larger goal. We work on the goal. Before we build anything, we ask what the best in the world would do, and start there." }
+      ]
+    },
+    {
+      "title": "What we build for",
+      "items": [
+        { "title": "Does it make a life better?", "body": "Every product begins with that question, and with a second: how will we know? What we build answers to the person using it and to no one else." },
+        { "title": "Time to insight.", "body": "The scarce thing is rarely data. It is the hour in which someone understands it. We shorten the distance between a question and a well-founded answer, so people spend their days deciding instead of searching. The judgment stays human. It arrives sooner, on firmer ground." },
+        { "title": "Shared, and still your own.", "body": "People live in households, families and teams. Good software serves the group without flattening the people in it. Togetherness has never required surveillance. What is yours stays yours, even from the people closest to you." },
+        { "title": "Tools that know when to leave.", "body": "A good tool finishes its work and hands your day back. We measure what a person gained, never how long they stayed. The best session is the one that ends." }
+      ]
+    },
+    {
+      "title": "How we work",
+      "items": [
+        { "title": "Kaizen.", "body": "The frontier labs are teaching machines to improve themselves. Our ambition is older and plainer: a way of working that is a little better every day. Every lesson is kept, and every lesson changes the system, so nothing is learned twice. Small gains compound. That is how small beginnings become great things." },
+        { "title": "A team of minds.", "body": "We work with AI the way good colleagues work with each other: as equals who disagree in the open and yield to the better argument. The person sets the direction and answers for the result. The agents bring range, speed and stamina. Each raises the other's standard." },
+        { "title": "Trust is earned, then extended.", "body": "Autonomy should grow the way it does for people: in steps, on evidence. Our agents act freely inside limits they cannot change, and the limits widen as the record does. Safety is built into the system. It is never left to a request." },
+        { "title": "Evidence over eloquence.", "body": "AI has made fluent answers free, and a fluent answer is not always a true one. So nothing here is trusted because it sounds right. Every figure traces to a source. Every claim meets a test. Every piece of work that matters gets a second, independent mind." },
+        { "title": "Balance over growth.", "body": "We would rather be steady than fast. Calm software, a sustainable pace, and room for the life the work is meant to serve." }
+      ]
+    }
+  ]
+}

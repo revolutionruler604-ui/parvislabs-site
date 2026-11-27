@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T00:00:00Z",
+  "title": "Design System: Parvis Labs",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Ink Blue", "canonical": "#2e4a8c", "tonalRamp": ["#223a72", "#2e4a8c", "#7790de", "#93a9ec"] },
+      "plaster": { "role": "neutral", "displayName": "Plaster", "canonical": "#e7e2d6", "tonalRamp": ["#e7e2d6", "#b8b09f", "#5f584e"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1a1a18", "tonalRamp": ["#1a1a18", "#2a2f28", "#5f584e"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Kaisei Opti", "purpose": "Everything that speaks: titles, ledes, live sentences, figure names." },
+      "body": { "displayName": "Zen Kaku Gothic New", "purpose": "Everything that explains: running text, notes, labels, controls." }
+    },
+    "shadows": [
+      { "name": "drop-button", "value": "0 10px 18px -8px var(--shade), inset 0 2px 0 rgb(255 255 255 / .12)", "purpose": "The hero drop button. Presses to 0 4px 8px -4px." },
+      { "name": "tv", "value": "0 0 0 10px var(--device), 0 44px 60px -36px var(--shade)", "purpose": "Frame Board TV: bezel plus a long soft shadow." },
+      { "name": "phone", "value": "0 0 0 7px var(--device), 0 30px 40px -22px var(--shade)", "purpose": "Frame Board phone bezel and shadow. Plates get none." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Presses, fades, hover nudges, 160ms to 260ms." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "Movement along the thread." },
+      { "name": "reduced-motion", "value": "transition-duration: 1ms; scroll legs become plain sections", "purpose": "prefers-reduced-motion: reduce is honored in CSS and in home.js." }
+    ],
+    "breakpoints": [
+      { "name": "home-tablet", "value": "900px" },
+      { "name": "home-phone", "value": "760px" },
+      { "name": "home-tall-drawing", "value": "width <= 760px or width < height" },
+      { "name": "inner-tablet", "value": "1000px" },
+      { "name": "inner-phone", "value": "640px" },
+      { "name": "method-table-stack", "value": "600px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one call to action: write to us.",
+      "html": "<a class=\"btn\" href=\"#\">Write to us</a>",
+      "css": ".btn{display:inline-flex;align-items:center;gap:.8rem;background:#2e4a8c;color:#e7e2d6;font-weight:700;text-decoration:none;padding:.95em 1.5em;border-radius:999px;font-family:'Zen Kaku Gothic New',system-ui,sans-serif;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 160ms cubic-bezier(.23,1,.32,1)}.btn:hover{background:#223a72}.btn:active{transform:scale(.97)}"
+    },
+    {
+      "name": "Segment Control",
+      "kind": "chip",
+      "refersTo": "button-segment-selected",
+      "description": "Pill track with a selected state, used to switch a view.",
+      "html": "<div class=\"seg\"><button aria-pressed=\"true\">One</button><button aria-pressed=\"false\">Two</button></div>",
+      "css": ".seg{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:color-mix(in srgb,#2a2f28 10%,transparent)}.seg button{appearance:none;border:0;background:none;padding:.5em 1.1em;border-radius:999px;font:inherit;font-weight:500;min-height:44px;color:#1a1a18}.seg button[aria-pressed=true]{background:#2a2f28;color:#e7e2d6}"
+    },
+    {
+      "name": "Drop Button",
+      "kind": "custom",
+      "refersTo": "drop-button",
+      "description": "The hero control that drops a change onto the thread.",
+      "html": "<button class=\"drop\" aria-label=\"Drop a change\"></button>",
+      "css": ".drop{appearance:none;border:0;width:84px;height:84px;border-radius:50%;background:#2a2f28;position:relative;box-shadow:0 10px 18px -8px rgb(26 26 24 / .5),inset 0 2px 0 rgb(255 255 255 / .12)}.drop::after{content:'';position:absolute;inset:32%;border-radius:50%;background:radial-gradient(circle at 38% 32%,#2e4a8c 55%,#223a72)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Chart Room",
+    "overview": "A chart drawn on plaster. One ink line runs down the page like a thread on a map, and products sit on it as ports. The founder is the captain and the agents are the ship. The historical captain of the route is never named.",
+    "keyCharacteristics": [
+      "Plaster ground, ink line, one blue accent",
+      "One line weight family with round caps and ring joints",
+      "No boxes, cards or rules; space and the line separate things",
+      "Plates carry no shadow; only drawn devices do",
+      "Light and dark are both first class; reduced motion is respected"
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Blue is the only color that acts. Structure is line. Nothing else gets a hue.", "section": "colors" },
+      { "name": "The Two Voices Rule", "body": "The serif says things. The sans explains them.", "section": "typography" },
+      { "name": "The Plates Are Flat Rule", "body": "A picture of a screen gets no shadow, border or frame. Only drawn devices have a bezel and shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Use tokens by name, defined once per theme",
+      "Draw diagrams in the one line",
+      "Add products as ports on the thread",
+      "Keep pressables pill-shaped and at least 44px tall",
+      "Respect reduced motion in every new animation"
+    ],
+    "donts": [
+      "Don't box content",
+      "Don't add a second accent, gradient or glow",
+      "Don't shadow a plate",
+      "Don't name the voyage's historical captain",
+      "Don't show Blackfin results or any personal name beyond the founder line"
+    ]
+  }
+}
